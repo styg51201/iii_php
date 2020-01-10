@@ -7,6 +7,7 @@ header("Content-Type: text/html; chartset=utf-8");
 //引用資料庫連線
 require_once('./db.inc.php');
 
+//從index.php 接收post 資料近來
 if( isset($_POST['username']) && isset($_POST['pwd']) ){
     //SQL 語法
     $sql = "SELECT `username`, `pwd` ";
@@ -15,8 +16,8 @@ if( isset($_POST['username']) && isset($_POST['pwd']) ){
     $sql.= "AND `pwd` = ? ";
 
     $arrParam = [
-        $_POST['username'],
-        sha1($_POST['pwd'])
+        $_POST['username'], //等於上面第一個問號
+        sha1($_POST['pwd']) //等於上面第二個問號
     ];
 
     $pdo_stmt = $pdo->prepare($sql);
@@ -31,10 +32,10 @@ if( isset($_POST['username']) && isset($_POST['pwd']) ){
 
         echo "登入成功!!! 3秒後自動進入後端頁面";
     } else {
-        header("Refresh: 3; url=./login.php");
+        header("Refresh: 3; url=./index.php");
         echo "登入失敗…3秒後自動回登入頁";
     }
 } else {
-    header("Refresh: 3; url=./login.php");
+    header("Refresh: 3; url=./index.php");
     echo "請確實登入…3秒後自動回登入頁";
 }
