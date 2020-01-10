@@ -73,31 +73,11 @@ require_once('./db.inc.php');
             <td class="border"><?php echo $arr[$i]['created_at'] ?></td>
             <td class="border"><?php echo $arr[$i]['updates_at'] ?></td>
             <td class="border">
-            <?php 
-                $Df="";
-                $Ch="";
-                $On="";
-                $Dn="";
-               switch($arr[$i]['Status']) {
-                case '預設':
-                    $Df='checked';
-                break;
-                case '審核':
-                    $Ch='checked';
-                break;
-                case '上架':
-                    $On='checked';
-                break;
-                case '下架':
-                    $Dn='checked';
-                break;
-               }
-
-            ?>
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="預設" <?php echo $Df ?>>預設
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="審核" <?php echo $Ch ?>>審核
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="上架" <?php echo $On ?>>上架
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="下架" <?php echo $Dn ?>>下架
+       
+                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="預設" <?php if($arr[$i]['Status']=='預設') echo 'checked' ?>>預設
+                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="審核" <?php if($arr[$i]['Status']=='審核') echo 'checked' ?>>審核
+                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="上架" <?php if($arr[$i]['Status']=='上架') echo 'checked' ?>>上架
+                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="下架" <?php if($arr[$i]['Status']=='下架') echo 'checked' ?>>下架
                 <input type="hidden" name="editId[]" value="<?php echo $arr[$i]['Id'] ?>">
             </td>
             <td class="border">
