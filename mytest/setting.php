@@ -36,6 +36,8 @@ require_once('./db.inc.php');
             <th class="border">Name</th>
             <th class="border">Img</th>
             <th class="border">Status</th>
+            <th class="border">上架時間</th>
+            <th class="border">下架時間</th>
             <th class="border">created_at</th>
             <th class="border">updates_at</th>
             <th class="border">變更狀態</th>
@@ -57,8 +59,11 @@ require_once('./db.inc.php');
             for($i=0; $i<count($arr); $i++){
         ?>
         <tr>
-            <td class="border"> <?php echo $arr[$i]['Id'] ?> </td>
-            <td class="border"><?php echo $arr[$i]['Class'] ?></td>
+            <td class="border">
+             <?php echo $arr[$i]['Id'] ?> </td>
+            <td class="border"><?php echo $arr[$i]['Class'] ?>
+            <input type="hidden" name="editId[]" value="<?php echo $arr[$i]['Id'] ?>">
+            </td>
             <td class="border"><?php echo $arr[$i]['Name'] ?></td>
             <td class="border">
 
@@ -69,7 +74,12 @@ require_once('./db.inc.php');
                 <?php } ?>
 
             </td>
-            <td class="border"><?php echo $arr[$i]['Status'] ?></td>
+            <td class="border">
+            <?php echo $arr[$i]['Status'] ?>
+            <input type="hidden" name="editId[]" value="<?php echo $arr[$i]['Status'] ?>">
+            </td>
+            <td class="border"><?php echo $arr[$i]['OnTime'] ?></td>
+            <td class="border"><?php echo $arr[$i]['DownTime'] ?></td>
             <td class="border"><?php echo $arr[$i]['created_at'] ?></td>
             <td class="border"><?php echo $arr[$i]['updates_at'] ?></td>
             <td class="border">
@@ -78,7 +88,6 @@ require_once('./db.inc.php');
                 <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="審核" <?php if($arr[$i]['Status']=='審核') echo 'checked' ?>>審核
                 <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="上架" <?php if($arr[$i]['Status']=='上架') echo 'checked' ?>>上架
                 <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="下架" <?php if($arr[$i]['Status']=='下架') echo 'checked' ?>>下架
-                <input type="hidden" name="editId[]" value="<?php echo $arr[$i]['Id'] ?>">
             </td>
             <td class="border">
                 <a href="./show.php?showId=<?php echo $arr[$i]['Id'] ?>">瀏覽</a>
