@@ -76,7 +76,7 @@ require_once('./db.inc.php');
             </td>
             <td class="border">
             <?php echo $arr[$i]['Status'] ?>
-            <input type="hidden" name="editId[]" value="<?php echo $arr[$i]['Status'] ?>">
+            <input type="hidden" name="Status[]" value="<?php echo $arr[$i]['Status'] ?>">
             </td>
             <td class="border"><?php echo $arr[$i]['OnTime'] ?></td>
             <td class="border"><?php echo $arr[$i]['DownTime'] ?></td>
@@ -84,10 +84,10 @@ require_once('./db.inc.php');
             <td class="border"><?php echo $arr[$i]['updates_at'] ?></td>
             <td class="border">
        
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="預設" <?php if($arr[$i]['Status']=='預設') echo 'checked' ?>>預設
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="審核" <?php if($arr[$i]['Status']=='審核') echo 'checked' ?>>審核
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="上架" <?php if($arr[$i]['Status']=='上架') echo 'checked' ?>>上架
-                <input type="radio" name="Status<?php echo $arr[$i]['Id']?>" value="下架" <?php if($arr[$i]['Status']=='下架') echo 'checked' ?>>下架
+                <input type="radio" name="editStatus<?php echo $i?>" value="預設" <?php if($arr[$i]['Status']=='預設') echo 'checked' ?>>預設
+                <input type="radio" name="editStatus<?php echo $i?>" value="審核" <?php if($arr[$i]['Status']=='審核') echo 'checked' ?>>審核
+                <input type="radio" name="editStatus<?php echo $i?>" value="上架" <?php if($arr[$i]['Status']=='上架') echo 'checked' ?>>上架
+                <input type="radio" name="editStatus<?php echo $i?>" value="下架" <?php if($arr[$i]['Status']=='下架') echo 'checked' ?>>下架
             </td>
             <td class="border">
                 <a href="./show.php?showId=<?php echo $arr[$i]['Id'] ?>">瀏覽</a>

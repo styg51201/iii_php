@@ -16,14 +16,13 @@ $sqlTime = 'UPDATE `ad` SET `OnTime` = ? WHERE `Id`= ?';
 
 $count = 0;
 
-$Id=$_POST['editId'];
 
-for ($i= 0 ; $i < count($Id) ; $i++){
-    if( $_POST['']){
+for ($i= 0 ; $i < count($_POST['editId']) ; $i++){
+    if( $_POST['Status'][$i] !== $_POST['editStatus'.$i] ){
         
             
-            $arr = [$_POST['Status'.$Id[$i]],
-                    $Id[$i]];
+            $arr = [$_POST['editStatus'.$i],
+                    $_POST['editId'][$i]];
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute($arr);
@@ -35,7 +34,7 @@ for ($i= 0 ; $i < count($Id) ; $i++){
 
             if( $arr[0]=='上架'){
                 $arrTime = [date('Y-m-d H:i:s'),
-                            $Id[$i]];
+                            $_POST['editId'][$i]];
                 $stmtTime = $pdo->prepare($sqlTime);
                 $stmtTime->execute($arrTime);
             }
