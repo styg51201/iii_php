@@ -84,6 +84,18 @@ require_once('./db.inc.php');
                 <input type="radio" name="Status" value="下架" <?php if($arr['Status']=='下架') echo 'checked' ?>>下架
                 </td>
             </tr>
+            <tr>
+                <td class="border">上架時間</td>
+                <td class="border">
+                <input type="datetime-local" name="OnTime">
+                </td>
+            </tr>
+            <tr>
+                <td class="border">下架時間</td>
+                <td class="border">
+                <input type="datetime-local" name="DownTime">
+                </td>
+            </tr>
         </tbody>
         <tfoot>
             <tr>
