@@ -3,6 +3,7 @@ require_once('./checkAdmin.php'); //引入登入判斷
 require_once('../db.inc.php'); //引用資料庫連線
 
 //建立種類列表
+//$parentId 沒設參數時 預設是0 
 function buildTree($pdo, $parentId = 0){
     $sql = "SELECT `categoryId`, `categoryName`, `categoryParentId`
             FROM `categories` 
@@ -19,12 +20,37 @@ function buildTree($pdo, $parentId = 0){
             echo $arr[$i]['categoryName'];
             echo " | <a href='./editCategory.php?editCategoryId=".$arr[$i]['categoryId']."'>編輯</a>";
             echo " | <a href='./deleteCategory.php?deleteCategoryId=".$arr[$i]['categoryId']."'>刪除</a>";
+            //找出父層是自己本身的ID 也就是 找出我自己的子層
             buildTree($pdo, $arr[$i]['categoryId']);
+            //沒有找到子層後結束function 然後會再印出結尾標籤 然後再回到上一層再印出結尾標籤 請看下面Tree()
             echo "</li>";
         }
         echo "</ul>";
     }
 }
+// function Tree (a) {
+//     if(a<3){
+//         echo <li>
+//         Tree(a+1)
+//         echo </li> 
+//     }
+// }
+
+// Tree(1) => 
+// Tree(1){
+//     if(a<3){
+//         echo <li>
+//         Tree(2){
+//             if(a<3){
+//                 echo <li>
+//                 Tree(a+1)  =>(不符合if條件,函式就結束了)
+//                 echo </li> =>(執行後 此Tree(2)的函式結束 會往下回到                                    Tree(1)的函式裡繼續執行)
+//             }
+//         }
+//         echo </li>  =>(Tree(2)的函式結束後 會執行這裡)
+//     }
+// }
+
 ?>
 <!DOCTYPYE html>
 <html>
@@ -64,6 +90,7 @@ function buildTree($pdo, $parentId = 0){
         </tr>
     </tfoot>
 </table>
+
 
 </form>
 </body>

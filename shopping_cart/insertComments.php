@@ -19,7 +19,9 @@ if($stmt->rowCount() > 0) {
     //取得最後新增的流水號
     $newId = $pdo->lastInsertId();
 
+    
     try{
+        //開始交易? 會一個一個來
         $pdo->beginTransaction();
 
         //取得最後一次新增的資料
@@ -33,7 +35,8 @@ if($stmt->rowCount() > 0) {
         if($stmtComments->rowCount() > 0){
             $objResponse['data'] = $stmtComments->fetchAll(PDO::FETCH_ASSOC)[0];
         }
-
+        
+        //若上述沒錯誤就會執行
         $pdo->commit();
 
         echo json_encode($objResponse, JSON_UNESCAPED_UNICODE);

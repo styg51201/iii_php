@@ -12,7 +12,7 @@ if( !isset($_GET["idx"]) ){
 
 unset($_SESSION['cart'][$_GET["idx"]]);
 
-array_values($_SESSION['cart']);
+$_SESSION['cart'] = array_values($_SESSION['cart']);
 
 header("Refresh: 3; url=./myCart.php");
 $objResponse['success'] = true;

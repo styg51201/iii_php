@@ -44,6 +44,8 @@ require_once("./tpl/func-getRecursiveCategoryIds.php");
 
                         $total = 0;
 
+                     
+
                         if( isset($_SESSION["cart"]) && count($_SESSION["cart"]) > 0 ){
 
                             //SQL 敘述
@@ -54,7 +56,11 @@ require_once("./tpl/func-getRecursiveCategoryIds.php");
                                     ON `items`.`itemCategoryId` = `categories`.`categoryId`
                                     WHERE `itemId` = ? ";
 
+
                             for($i = 0; $i < count($_SESSION["cart"]); $i++){
+
+                        
+
                                 $arrParam = [
                                     (int)$_SESSION["cart"][$i]["itemId"]
                                 ];
@@ -68,6 +74,14 @@ require_once("./tpl/func-getRecursiveCategoryIds.php");
                                     $arrTmp = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
                                     $arrTmp['cartQty'] = $_SESSION["cart"][$i]["cartQty"];
                                     $arr[] = $arrTmp;
+
+                        //  echo '<pre>T';
+                        // print_r($arrTmp);
+                        // echo '</pre>';
+
+                        // echo '<pre>B';
+                        // print_r($arr);
+                        // echo '</pre>';
                                 } 
                             } 
 

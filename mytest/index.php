@@ -1,6 +1,7 @@
 <?php
 
 require_once('./db.inc.php');
+
 ?>
 <!DOCTYPYE html>
 <html>
@@ -27,8 +28,17 @@ require_once('./db.inc.php');
   <header id="header" class="clear">
     <div id="hgroup">
         <h1><a href="#">Basic 73</a>
-
-        <a href="./setting.php">版面設定</a>
+        
+        <?php 
+        session_start();
+        if(isset($_SESSION['username'])){
+          echo '<a href="./setting.php">版面設定</a> 
+                <a href="./logout.php?logout=1">登出</a>';
+        }else{
+          echo '<a href="./login.php">登入</a>';
+        }
+        ?>
+        <!-- <a href="./setting.php">版面設定</a> -->
 
         </h1>
 
@@ -45,29 +55,42 @@ require_once('./db.inc.php');
     <section id="slider">
 
     <?php 
-        $sqlOn = "SELECT `Img`,`Status`
-                FROM `ad`
-                WHERE `Status` = '上架'";
+            // echo $arr['startTime'];
+            // echo '<br>';
+            // echo date('Y-m-d');
+            // echo '<br>';
 
-         $sqlDf = "SELECT `Img`,`Status`
-         FROM `ad`
-         WHERE `Status` = '預設'";
+        $sqlOn = "SELECT  *
+                  FROM `plan` INNER JOIN `ad`
+                  on `plan`.`id` = `ad`.`planId`
+                  WHERE `plan`.`status` = '上架'";
 
-        $stmt=$pdo->query($sqlOn);
-       
-        if($stmt->rowCount() > 0){
-            $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
-    ?>  
-    <img src="./images/<?php echo $arr['Img'] ?>">
-        <?php } else{
-          $stmt=$pdo->query($sqlDf);
-          $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
-          ?>
-          <img src="./images/<?php echo $arr['Img'] ?>">
-       <?php }
-        
-        ?>
+        // $sqlDf = "SELECT  *
+        //           FROM `plan` INNER JOIN `ad`
+        //           on `plan`.`id` = `ad`.`planId`
+        //           WHERE `plan`.`status` = '預設'";
+        $today = date('Y-m-d');
+        $stmtOn = $pdo->query($sqlOn);
+        // echo '<pre>';
+        // print_r($sqlOn);
+        //  echo '</pre>';
     
+        if($stmtOn->rowCount() > 0){
+            $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC)[0];
+            if( $arrOn['startTime'] <= $today && $arrOn['dueTime'] >= $today ){
+    ?>
+            <img src="./images/<?php echo $arrOn['Img'] ?>">
+    <?php } 
+    
+        }else{ 
+    ?>
+            <img src="./images/預設.jpg">
+        <?php 
+              // $stmtDf=$pdo->query($sqlDf);
+              // if($stmtDf->rowCount() > 0){
+              //   $arrDf = $stmtDf->fetchAll(PDO::FETCH_ASSOC)[0];
+              }?>
+
     </section>
 
     <!-- main content -->

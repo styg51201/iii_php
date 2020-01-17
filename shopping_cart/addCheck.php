@@ -22,6 +22,7 @@ $arrParamOrder = [
     $_POST["paymentTypeId"]
 ];
 $stmtOrder->execute($arrParamOrder);
+//取得最後自動新增的流水號
 $orderId = $pdo->lastInsertId();
 
 $count = 0;
@@ -31,6 +32,7 @@ $sqlItemList = "INSERT INTO `item_lists` (`orderId`,`itemId`,`checkPrice`,`check
 $stmtItemList = $pdo->prepare($sqlItemList);
 for($i = 0; $i < count($_POST["itemId"]); $i++){
     $arrParamItemList = [
+        //上面取得的ID,做相依性
         $orderId,
         $_POST["itemId"][$i],
         $_POST["itemPrice"][$i],

@@ -40,9 +40,9 @@
                 }
             }).done(function(data) {
                 alert(JSON.stringify(data));
-                $('div#myTarget').html(`<div>Name: ${data.name}, Age: ${data.age}</div>`);
-                $('input#txt').val(data.name)
-                $('div#test').html(data);
+                // $('div#myTarget').html(`<div>Name: ${data.name}, Age: ${data.age}</div>`);
+                $('input#txt').val(data.name);
+                $('#test').html(data.height);
 
             });
         });
@@ -55,6 +55,7 @@
     <button name="btn_post" id="btn_post">使用 POST 傳遞</button>
     <br />
     <button name="btn_ajax" id="btn_ajax">使用 Ajax 傳遞</button>
+
     <div id="test"></div>
     
     <input type="text" name="txt" id="txt" value="">

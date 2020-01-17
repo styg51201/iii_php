@@ -25,9 +25,11 @@ $sql = "SELECT `items`.`itemId`, `items`.`itemName`, `items`.`itemImg`, `items`.
         ON `items`.`itemCategoryId` = `categories`.`categoryId`
         WHERE `itemId` = ? ";
 
+//點選的商品ID
 $arrParam = [
     (int)$_POST['itemId']
 ];
+
 
 //查詢
 $stmt = $pdo->prepare($sql);
@@ -47,6 +49,7 @@ if($stmt->rowCount() > 0) {
     $objResponse['success'] = true;
     $objResponse['code'] = 200;
     $objResponse['info'] = "已加入購物車";
+    //echo 回傳 json格式的 $objResponse 
     echo json_encode($objResponse, JSON_UNESCAPED_UNICODE);
     exit();
 } else {

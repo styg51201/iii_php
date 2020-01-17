@@ -2,9 +2,10 @@
 require_once('./checkAdmin.php'); //引入登入判斷
 require_once('../db.inc.php'); //引用資料庫連線
 
-//刪除類別
+//刪除父類別 子層也會一起刪除
 if(isset($_GET['deleteCategoryId'])){
     $strCategoryIds = "";;
+    //把此父層的ID 先加入到陣列
     $strCategoryIds.= $_GET['deleteCategoryId'];
     getRecursiveCategoryIds($pdo, $_GET['deleteCategoryId']);
     
@@ -29,6 +30,8 @@ if(isset($_GET['deleteCategoryId'])){
 }
 
 //搭配全域變數，遞迴取得上下階層的 id 字串集合
+//透過父層的ID 找出是否有子層 有的話就把子層的ID加到字串裡面 並且再用子層ID往下找有沒有子層 全部結束後 
+//字串裡面會有[父層的ID,子層1的ID,孫層的ID,子層2的ID]
 function getRecursiveCategoryIds($pdo, $categoryId){
     global $strCategoryIds;
     $sql = "SELECT `categoryId`

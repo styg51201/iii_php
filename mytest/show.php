@@ -1,5 +1,5 @@
 <?php
-
+require_once('./checkSession.php');
 require_once('./db.inc.php');
 ?>
 <!DOCTYPYE html>
