@@ -18,9 +18,19 @@ require_once('./db.inc.php');
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
     <style>
         .span{
             padding:0 60px
+        }
+        #swal{
+            display:block;
         }
     </style>
 
@@ -52,6 +62,7 @@ require_once('./db.inc.php');
                         alert(1);
                         // location.reload(true);
                
+
 
 
                     }else{
@@ -189,7 +200,7 @@ require_once('./db.inc.php');
                             </table>
                             <br>
                             <button class="btn btn-w-m btn-success submit">修改</button>
-
+                            <button class="btn btn-success btn-sm demo2">Run example</button>
                             </div>
                         </div>
                     </div>
@@ -213,7 +224,23 @@ require_once('./db.inc.php');
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
 
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
+    <script>
+
+        $(document).ready(function () {
+
+            $('.demo2').click(function () {
+                swal({
+                    title: "Good job!",
+                    text: "You clicked the button!",
+                    type: "success"
+                });
+            });
+        });
+
+    </script>
 </body>
 
 </html>
