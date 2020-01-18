@@ -3,7 +3,12 @@ require_once('./checkSession.php');
 require_once('./db.inc.php');
 
 $sqlPlan = "DELETE FROM `Plan` WHERE `id` = ?";
-$arrPlan = [(int)$_GET['deleteId']];
+$arrPlan = [(int)$_POST['deleteId']];
+
+// echo "<pre>";
+//     print_r($_POST);
+//     echo "</pre>";
+//     exit();
 
 $stmtPlan = $pdo->prepare($sqlPlan);
 $stmtPlan->execute($arrPlan);
@@ -21,7 +26,7 @@ $stmtImg = $pdo->prepare($sqlImg);
 //     exit();
 // }
 
-$arrImg= [(int)$_GET['deleteId']];
+$arrImg= [(int)$_POST['deleteId']];
 
 $stmtImg->execute($arrImg);
 
@@ -34,17 +39,19 @@ if( $stmtImg->rowCount() > 0 ){
 }
 
 $sqlAd = "DELETE FROM `ad` WHERE `planId` = ?";
-$arrAd = [(int)$_GET['deleteId']];
+$arrAd = [(int)$_POST['deleteId']];
 
 $stmtAd = $pdo->prepare($sqlAd);
 $stmtAd->execute($arrAd);
 
 if( $stmtPlan->rowCount() > 0 || $stmtAd->rowCount() > 0 ){
-    header("Refresh: 3; url=./setting.php");
-    echo "刪除成功 \^o^/";
+    // header("Refresh: 3; url=./setting.php");
+    // echo "刪除成功 \^o^/";
+    echo true;
     exit();
 } else {
-    header("Refresh: 3; url=./setting.php");
-    echo "刪除失敗 ˊ.ˋ";
+    // header("Refresh: 3; url=./setting.php");
+    // echo "刪除失敗 ˊ.ˋ";
+    echo false;
     exit();
 }

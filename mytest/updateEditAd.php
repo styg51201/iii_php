@@ -85,11 +85,13 @@ $stmtAd = $pdo->prepare($sqlAd);
 $stmtAd->execute($arrAd);
 
 if( $stmtAd->rowCount() >0 ){
-    header("Refresh: 3; url=./setting.php");
-    echo "更新成功";
+    // header("Refresh: 3; url=./setting.php");
+    // echo "更新成功";
+    echo true;
     exit();
 } else {
-    header("Refresh: 3; url=./setting.php");
-    echo "沒有任何更新";
+    // header("Refresh: 3; url=./setting.php");
+    // echo "沒有任何更新";
+    echo false;
     exit();
 }

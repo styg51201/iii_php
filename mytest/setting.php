@@ -40,68 +40,6 @@ require_once('./db.inc.php');
         <!-- 引入 jQuery 的函式庫 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-        <script>
-
-        
-
-        $(document).ready(function(){
-
-            let statusId;
-            let status;
-            
-            
-            //使用 Ajax 傳遞 (常用)
-            $(document).on('click', 'button.editStatus', function(){
-    
-                statusId = $(this).children('span').html();
-                status = $(this).parent().prev().html();
-
-                if(status == '審核'){
-                    $("input[name=status]").attr("checked",false);
-                    $("input[name=status][value='審核']").attr("checked",true);
-                }else if(status == '上架'){
-                    $("input[name=status]").attr("checked",false);
-                    $("input[name=status][value='上架']").attr("checked",true);
-                }else if(status == '下架'){
-                    $("input[name=status]").attr("checked",false);
-                    $("input[name=status][value='下架']").attr("checked",true);
-                }
-                $('.editId').attr('value',statusId);
-
-        
-
-            });
-
-            $(document).on('click', 'button.toggle', function(){
-
-                $('.alertBox').slideToggle();
-                });
-
-
-            $(document).on('click', '.submit', function() {
-                $.ajax({
-                    type: 'POST',
-                    url: './updatePlanStatus.php',
-                    data: {
-                            editId:$('input[name=editId]').val(),
-                            status:$('input[name=status]:checked').val()
-                    }
-                })
-                .done(function(data) {
-                    if(data){
-                        $('.alertBox').slideToggle();
-                        location.reload(true);
-               
-
-
-                    }else{
-                        $('.alertBox').slideToggle();
-                    };
-                })
-            })
-        
-        });
-        </script>
 
 
 </head>
@@ -221,12 +159,12 @@ require_once('./db.inc.php');
                                                     <td><?php echo $arr[$i]['startTime'] ?></td>
                                                     <td><?php echo $arr[$i]['dueTime'] ?></td>
                                                     <td><a href="editPlan.php?editId=<?php echo $arr[$i]['id'] ?>">修改</a></td>
-                                                    <td><a href="deletePlan.php?deleteId=<?php echo $arr[$i]['id'] ?>">刪除</a></td>
+                                                    <td><button class="btn delete"><span style="display:none"><?php echo $arr[$i]['id'] ?></span>刪除</button></td> 
                                                     <?php 
                                                         $sqlAd = 'SELECT *
                                                         FROM `ad`
                                                         WHERE `PlanId` = ?';
-                                                        $arrAd = [$arr[$i]['id']];
+                                                         $arrAd = [$arr[$i]['id']];
                                                         $stmtAd=$pdo->prepare($sqlAd);
                                                         $stmtAd->execute($arrAd);
                                                         if($stmtAd->rowCount() > 0){
@@ -239,7 +177,7 @@ require_once('./db.inc.php');
                                                     <a href="./show.php?showId=<?php echo $brr[$i]['Id'] ?>">圖片瀏覽</a>
                                                     </td>
                                                     <td><a href="editAd.php?editId=<?php echo $brr[$k]['Id'] ?>">圖片修改</a></td>
-                                                    <td><a href="deleteAd.php?deleteId=<?php echo $brr[$k]['Id'] ?>">圖片刪除</a></td>   
+                                                    <td><button class="btn deleteAd"><span style="display:none"><?php echo $brr[$k]['Id'] ?></span>圖片刪除</button></td>   
                                                     <?php
                                                             }      
                                                         }else{ ?>
@@ -280,6 +218,102 @@ require_once('./db.inc.php');
 
     <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            let statusId;
+            let status;
+            
+            
+            //使用 Ajax 傳遞 (常用)
+            $(document).on('click', 'button.editStatus', function(){
+    
+                statusId = $(this).children('span').html();
+                status = $(this).parent().prev().html();
+
+                if(status == '審核'){
+                    $("input[name=status]").attr("checked",false);
+                    $("input[name=status][value='審核']").attr("checked",true);
+                }else if(status == '上架'){
+                    $("input[name=status]").attr("checked",false);
+                    $("input[name=status][value='上架']").attr("checked",true);
+                }else if(status == '下架'){
+                    $("input[name=status]").attr("checked",false);
+                    $("input[name=status][value='下架']").attr("checked",true);
+                }
+                $('.editId').attr('value',statusId);
+
+            });
+
+            $(document).on('click', 'button.toggle', function(){
+
+                $('.alertBox').slideToggle();
+                });
+
+            $(document).on('click', '.submit', function() {
+                $.ajax({
+                    type: 'POST',
+                    url: './updatePlanStatus.php',
+                    data: {
+                            editId:$('input[name=editId]').val(),
+                            status:$('input[name=status]:checked').val()
+                    }
+                })
+                .done(function(data) {
+                    if(data){
+                        $('.alertBox').slideToggle();
+                        location.reload(true);
+
+                    }else{
+                        $('.alertBox').slideToggle();
+                    };
+                })
+            })
+
+            $(document).on('click', '.deleteAd', function() {
+                $.ajax({
+                    type: 'POST',
+                    url: './deleteAd.php',
+                    data: {
+                            deleteId:$(this).children('span').html()
+                    }
+                })
+                .done(function(data) {
+                    // alert(data)
+                    if(data){
+                        alert('刪除成功');
+                        location.reload(true);
+
+                    }else{
+                        alert('刪除失敗');
+                    };
+                })
+            })
+
+            $(document).on('click', '.delete', function() {
+                console.log($(this).children('span').html());
+                $.ajax({
+                    type: 'POST',
+                    url: './deletePlan.php',
+                    data: {
+                            deleteId:$(this).children('span').html()
+                    }
+                })
+                .done(function(data) {
+                    // alert(data)
+                    if(data){
+                        alert('刪除成功');
+                        location.reload(true);
+
+                    }else{
+                        alert('刪除失敗');
+                    };
+                })
+            })
+        });
+        </script>
+
 
 </body>
 

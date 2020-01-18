@@ -14,7 +14,7 @@ $stmtImg = $pdo->prepare($sqlImg);
 //     exit();
 // }
 
-$arrImg= [(int)$_GET['deleteId']];
+$arrImg= [(int)$_POST['deleteId']];
 
 $stmtImg->execute($arrImg);
 
@@ -26,18 +26,27 @@ if( $stmtImg->rowCount() > 0 ){
     }
 }
 
+
 $sql = "DELETE FROM `ad` WHERE `Id` = ?";
-$arrParam = [(int)$_GET['deleteId']];
+
+// echo "<pre>";
+//     print_r($_POST);
+//     echo "</pre>";
+//     exit();
+$arrParam = [(int)$_POST['deleteId']];
+
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($arrParam);
 
 if( $stmt->rowCount() > 0){
-    header("Refresh: 3; url=./setting.php");
-    echo "刪除成功 \^o^/";
+    // header("Refresh: 3; url=./setting.php");
+    // echo "刪除成功 \^o^/";
+    echo true;
     exit();
 } else {
-    header("Refresh: 3; url=./setting.php");
-    echo "刪除失敗 ˊ.ˋ";
+    // header("Refresh: 3; url=./setting.php");
+    // echo "刪除失敗 ˊ.ˋ";
+    echo false;
     exit();
 }

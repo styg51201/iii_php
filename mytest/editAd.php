@@ -35,6 +35,43 @@ require_once('./db.inc.php');
             object-fit:cover;
         }
     </style>
+     <!-- 引入 jQuery 的函式庫 -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+
+
+
+$(document).ready(function(){
+
+    $(document).on('click', '.submit', function() {
+        $.ajax({
+            type: 'POST',
+            url: './updateEditAd.php',
+            data: {
+                    Name:$('input[name=Name]').val(),
+                    Id:$('input[name=Id]').val(),
+                    Img:$('input[name=Img]').val()
+            }
+        })
+        .done(function(data) {
+            if(data){
+                alert(1);
+                // location.reload(true);
+       
+
+
+            }else{
+                alert(0);
+                // $('.alertBox').slideToggle();
+            };
+        })
+    })
+
+
+})
+
+</script>
 
 </head>
 
@@ -72,7 +109,7 @@ require_once('./db.inc.php');
                     <div class="col-lg-7">
                         <div class="ibox ">
                             <div class="ibox-content d-flex justify-content-around">
-                            <form name="myForm" method="POST" action="updateEditAd.php" enctype="multipart/form-data">
+                            <!-- <form name="myForm" method="POST" action="updateEditAd.php" enctype="multipart/form-data"> -->
 
                                 <table class="table">
                                     <tbody>
@@ -119,9 +156,10 @@ require_once('./db.inc.php');
                                     <input type="hidden" name="editId" value="<?php echo (int)$_GET['editId']; ?>">
                                 </table>
                                 <br>
-                                <input type="submit" class="btn btn-w-m btn-success" name="smb" value="修改">
+                                <button class="submit">修改</button>
+                                <!-- <input type="submit" class="btn btn-w-m btn-success" name="smb" value="修改"> -->
                             
-                                </form>
+                                <!-- </form> -->
                                     <div class="show">
                                         <img id="imgShow" src="./images/<?php echo $arr['Img'] ?>">
                                     </div>

@@ -44,17 +44,18 @@ require_once('./db.inc.php');
                             place:$('input[name=place]').val(),
                             startTime:$('input[name=startTime]').val(),
                             dueTime:$('input[name=dueTime]').val(),
-                            id:$('input[name=id]').val(),
+                            id:$('input[name=id]').val()
                     }
                 })
                 .done(function(data) {
                     if(data){
-                        // $('.alertBox').slideToggle();
+                        alert(1);
                         // location.reload(true);
                
 
 
                     }else{
+                        alert('修改失敗');
                         // $('.alertBox').slideToggle();
                     };
                 })
