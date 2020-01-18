@@ -2,6 +2,13 @@
 require_once('./checkSession.php');
 require_once('./db.inc.php');
 
+        // echo "<pre>";
+        // echo($_FILES['Img']['name']);
+        // echo($_POST['Id']);
+        // echo($_POST['Name']);
+        // print_r($arrAd);
+        // echo "</pre>";
+        // exit();
 
 $sqlAd = "UPDATE `ad` 
         SET `Name` = ?";

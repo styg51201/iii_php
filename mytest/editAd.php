@@ -44,15 +44,32 @@ require_once('./db.inc.php');
 
 $(document).ready(function(){
 
+    //ajax 傳送上傳的檔案方法
     $(document).on('click', '.submit', function() {
+        let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
+        let Name = $('input[name=Name]').val();
+        let Id = $('input[name=Id]').val();
+        // console.log(fileData);
+        let formData = new FormData();//建構new FormData()
+        formData.append('Img',fileData);//把物件加到file後面
+        formData.append('Name',Name);//加入其他資訊
+        formData.append('Id',Id);
+    
+        
+
         $.ajax({
             type: 'POST',
             url: './updateEditAd.php',
-            data: {
-                    Name:$('input[name=Name]').val(),
-                    Id:$('input[name=Id]').val(),
-                    Img:$('input[name=Img]').val()
-            }
+            // cache: false,
+            contentType: false,
+            processData: false,
+            //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
+            data: formData, 
+            // {
+            //         Name:$('input[name=Name]').val(),
+            //         Id:$('input[name=Id]').val(),
+            //         Img:$('input[name=Img]').val()
+            // }
         })
         .done(function(data) {
             if(data){
@@ -66,6 +83,10 @@ $(document).ready(function(){
                 // $('.alertBox').slideToggle();
             };
         })
+        .fail(function(){
+            alert(0);
+        })
+
     })
 
 
@@ -202,7 +223,7 @@ $(document).ready(function(){
         //選擇所要顯示圖片的img，要賦值給img的src就是e中target下result裡面
         //的base64編碼格式的地址
         $('#imgShow').get(0).src = e.target.result;
-        console.log(e.target.result);
+        // console.log(e.target.result);
         }
     })
 
