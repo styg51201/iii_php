@@ -19,22 +19,29 @@ require_once('./db.inc.php');
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
     <style>
         #imgShow{
-            width:200px;
-            height:100px;
+            width:300px;
+            height:130px;
             object-fit:cover;
         }
         .alertBox{
+            border:2px solid #778899;
+            border-radius:30px;
             background:#DDDDDD;
-            width:500px;
-            height:300px;
+            width:300px;
             left:50%;
             top:50%;
-            transform: translate(-65%,-65%);
+            transform: translate(-70%,-70%);
             display: none;
-           
-            
+            z-index:1;
+        }
+        .collapse>td{
+            vertical-align:middle
         }
     </style>
         <!-- 引入 jQuery 的函式庫 -->
@@ -72,26 +79,23 @@ require_once('./db.inc.php');
             </div>
             <!-- 內文 -->
             <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
+                <div class="row position-relative">
                     <div class="col-lg-12">
                    <!-- 設定狀態 -->
-                        <div class="ibox alertBox position-absolute">
-                            <div class="ibox-title">
-                            <h5>設定狀態</h5>
-                            </div>
-                            <div class="ibox-content alertContent">
-                                <h3>狀態變更</h3>
-                                <div>
-                                <label><input type="radio" name="status" value="審核">審核</label>
-                                <label><input type="radio" name="status" value="上架">上架</label>
-                                <label><input type="radio" name="status" value="下架">下架</label>
+                        <div class="ibox alertBox shadow-lg position-absolute">
+                            <div class="ibox-content alertContent" style="border-radius:30px;">
+                                <h4>狀態變更為: </h4>
+                                <br>
+                                <div class="d-flex justify-content-between">
+                                <label><input type="radio" name="status" value="審核" style="margin-right:8px">審核</label>
+                                <label><input type="radio" name="status" value="上架" style="margin-right:8px">上架</label>
+                                <label><input type="radio" name="status" value="下架" style="margin-right:8px" >下架</label>
                                 </div>
-                                <br><br>
-                                <input type="hidden" class="editId" name="editId" value="">
-                                <button class="btn btn-w-m btn-success submit">確認</button>
-                            </form>
-                                <button class="btn btn-w-m btn-primary toggle">取消</button>
-                                                                
+                                <br><input type="hidden" class="editId" name="editId" value="">
+                                <div class="d-flex justify-content-between">
+                                <button class="btn btn-w-m toggle" style="background:#D0D0D0">取消</button>
+                                <button class="btn btn-w-m  btn-success submit">確認</button>
+                                </div>                              
                             </div>
                         </div>
                         <div class="ibox ">
@@ -125,11 +129,12 @@ require_once('./db.inc.php');
                                                     <th>結束時間</th>
                                                     <th>修改</th>
                                                     <th>刪除</th>
-                                                    <th>圖片名稱</th>
+                                                    <th>詳細資訊</th>
+                                                    <!-- <th>圖片名稱</th>
                                                     <th>圖片</th>
                                                     <th>圖片瀏覽</th>
                                                     <th>圖片修改</th>
-                                                    <th>圖片刪除</th>
+                                                    <th>圖片刪除</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -152,14 +157,15 @@ require_once('./db.inc.php');
                                                     <td><?php echo $arr[$i]['place'] ?></td>
                                                     <td><?php echo $arr[$i]['status'] ?></td>
                                                     <td>
-                                                        <button class="btn toggle editStatus">設定
+                                                        <button class="btn btn-sm btn-outline btn-primary toggle editStatus">設定
                                                             <span class="statusId" style="display:none"><?php echo $arr[$i]['id'] ?></span>
                                                         </button>
                                                     </td>
                                                     <td><?php echo $arr[$i]['startTime'] ?></td>
                                                     <td><?php echo $arr[$i]['dueTime'] ?></td>
-                                                    <td><a href="editPlan.php?editId=<?php echo $arr[$i]['id'] ?>">修改</a></td>
-                                                    <td><button class="btn delete"><span style="display:none"><?php echo $arr[$i]['id'] ?></span>刪除</button></td> 
+                                                    <td><a class="btn btn-sm btn-primary" href="editPlan.php?editId=<?php echo $arr[$i]['id'] ?>">修改</a></td>
+                                                    <td><button class="btn btn-sm btn-danger deletePlan"><span style="display:none"><?php echo $arr[$i]['id'] ?></span>刪除</button></td>
+                                                     
                                                     <?php 
                                                         $sqlAd = 'SELECT *
                                                         FROM `ad`
@@ -171,13 +177,20 @@ require_once('./db.inc.php');
                                                             $brr = $stmtAd->fetchAll(PDO::FETCH_ASSOC);
                                                             for($k=0; $k < count($brr); $k++){ 
                                                     ?>
-                                                    <td><?php echo $brr[$k]['Name'] ?></td>
-                                                    <td><img id=imgShow src="./images/<?php echo $brr[$k]['Img'] ?>"></td>
-                                                    <td>
-                                                    <a href="./show.php?showId=<?php echo $brr[$i]['Id'] ?>">圖片瀏覽</a>
+                                                    <td><button class="fa fa-angle-double-down btn btn-circle"  data-toggle="collapse" data-target="#collapse<?php echo $brr[$k]['Id'] ?>" aria-expanded="false" aria-controls="collapse<?php echo $brr[$k]['Id'] ?>">
+                                                            </button></td>
+                                                    <tr  class="collapse" id="collapse<?php echo $brr[$k]['Id'] ?>">
+                                                    <th style="vertical-align:middle">圖片名稱</th>
+                                                    <td colspan="2" style="vertical-align:middle"><?php echo $brr[$k]['Name'] ?></td>
+                                                    <td colspan="5"><img id=imgShow src="./images/<?php echo $brr[$k]['Img'] ?>"></td>
+                                                    <td style="vertical-align:middle">
+                                                    <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=<?php echo $brr[$i]['Id'] ?>">圖片瀏覽</a>
                                                     </td>
-                                                    <td><a href="editAd.php?editId=<?php echo $brr[$k]['Id'] ?>">圖片修改</a></td>
-                                                    <td><button class="btn deleteAd"><span style="display:none"><?php echo $brr[$k]['Id'] ?></span>圖片刪除</button></td>   
+                                                    <td style="vertical-align:middle"><a class="btn btn-sm btn-outline btn-rounded btn-primary" href="editAd.php?editId=<?php echo $brr[$k]['Id'] ?>">圖片修改</a></td>
+                                                    <td style="vertical-align:middle"><button class="btn btn-sm btn-outline btn-rounded btn-danger deleteAd"><span style="display:none"><?php echo $brr[$k]['Id'] ?></span>圖片刪除</button></td>   
+                                                    </td>
+                                                    <td></td>
+                                                    </tr>
                                                     <?php
                                                             }      
                                                         }else{ ?>
@@ -219,14 +232,15 @@ require_once('./db.inc.php');
     <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
 
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
     <script>
         $(document).ready(function(){
 
             let statusId;
             let status;
-            
-            
-            //使用 Ajax 傳遞 (常用)
+            //狀態設定
             $(document).on('click', 'button.editStatus', function(){
     
                 statusId = $(this).children('span').html();
@@ -246,11 +260,13 @@ require_once('./db.inc.php');
 
             });
 
+            //狀態設定的Alert 開關
             $(document).on('click', 'button.toggle', function(){
 
                 $('.alertBox').slideToggle();
                 });
 
+            //狀態修改的Ajax
             $(document).on('click', '.submit', function() {
                 $.ajax({
                     type: 'POST',
@@ -270,46 +286,90 @@ require_once('./db.inc.php');
                     };
                 })
             })
-
+            //刪除圖片
             $(document).on('click', '.deleteAd', function() {
-                $.ajax({
-                    type: 'POST',
-                    url: './deleteAd.php',
-                    data: {
-                            deleteId:$(this).children('span').html()
-                    }
-                })
-                .done(function(data) {
-                    // alert(data)
-                    if(data){
-                        alert('刪除成功');
-                        location.reload(true);
+                let deleteAdId = $(this).children('span').html();
 
-                    }else{
-                        alert('刪除失敗');
-                    };
-                })
+                swal({
+                    title: "確定刪除圖片?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "刪除",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                    }, 
+                    function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: './deleteAd.php',
+                            data: {
+                                    deleteId:deleteAdId
+                            }
+                        })
+                        .done(function(data) {
+                            if(data){
+                                $(document).on('click', '.confirm', function() { 
+                                    setTimeout("location.reload(true)",100);
+                                })
+                                swal("刪除成功","","success");
+                           
+
+                            }else{
+                               $(document).on('click', '.confirm', function() { 
+                                    setTimeout("location.reload(true)",100);
+                                })
+                                swal("刪除失敗","","error");
+                            };
+                        })
+                        
+                    }
+                );
+                
             })
+            //刪除廣告活動
+            $(document).on('click', '.deletePlan', function() {
+                
+                let deletePlanId = $(this).children('span').html();
 
-            $(document).on('click', '.delete', function() {
-                console.log($(this).children('span').html());
-                $.ajax({
-                    type: 'POST',
-                    url: './deletePlan.php',
-                    data: {
-                            deleteId:$(this).children('span').html()
+                swal({
+                    title: "確定刪除廣告活動?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "刪除",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                    }, 
+                    function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: './deletePlan.php',
+                            data: {
+                                    deleteId:deletePlanId
+                            }
+                        })
+                        .done(function(data) {
+                            if(data){
+                                $(document).on('click', '.confirm', function() { 
+                                    setTimeout("location.reload(true)",100);
+                                })
+                                swal("刪除成功", "", "success",);
+                                
+                                
+
+                            }else{
+                                $(document).on('click', '.confirm', function() { 
+                                    setTimeout("location.reload(true)",100);
+                                })
+                                swal("刪除失敗","","error");
+                            };
+                        })
+                
                     }
-                })
-                .done(function(data) {
-                    // alert(data)
-                    if(data){
-                        alert('刪除成功');
-                        location.reload(true);
-
-                    }else{
-                        alert('刪除失敗');
-                    };
-                })
+                )
             })
         });
         </script>

@@ -22,8 +22,6 @@ require_once('./db.inc.php');
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
 
     <style>
         .span{
@@ -38,9 +36,6 @@ require_once('./db.inc.php');
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <script>
-
-        
-
         $(document).ready(function(){
 
             $(document).on('click', '.submit', function() {
@@ -57,19 +52,23 @@ require_once('./db.inc.php');
                             id:$('input[name=id]').val()
                     }
                 })
-                .done(function(data) {
-                    if(data){
-                        alert(1);
-                        // location.reload(true);
-               
-
-
-
-                    }else{
-                        alert('修改失敗');
-                        // $('.alertBox').slideToggle();
-                    };
+                .done(function() {
+                    swal({
+                    title: "修改成功",
+                    // text: "You clicked the button!",
+                    type: "success"
+                    });
                 })
+                .fail(function(){
+                    alert('傳送失敗');
+                });
+            });
+
+            $(document).on('click', '.confirm', function() {
+                // swal.close();
+                setTimeout("location='./setting.php'",100);
+                // $(location).attr('href','./setting.php');
+
             })
 
 
@@ -200,7 +199,6 @@ require_once('./db.inc.php');
                             </table>
                             <br>
                             <button class="btn btn-w-m btn-success submit">修改</button>
-                            <button class="btn btn-success btn-sm demo2">Run example</button>
                             </div>
                         </div>
                     </div>
@@ -227,20 +225,6 @@ require_once('./db.inc.php');
     <!-- Sweet alert -->
     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
-    <script>
-
-        $(document).ready(function () {
-
-            $('.demo2').click(function () {
-                swal({
-                    title: "Good job!",
-                    text: "You clicked the button!",
-                    type: "success"
-                });
-            });
-        });
-
-    </script>
 </body>
 
 </html>

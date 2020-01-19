@@ -36,6 +36,7 @@ $stmtPlan = $pdo->prepare($sqlPlan);
 $stmtPlan->execute($arrPlan);
 
 
+
 if( $stmtPlan->rowCount() > 0 ){
     echo true;
     exit();

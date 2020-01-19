@@ -24,10 +24,10 @@ if( count($_POST) == 7 && $_POST['name'] !== NUll  ){
 
 
 
-    header("Refresh: 2; url=./new.php");
-    echo '<pre>';
-    print_r($_SESSION);
-    echo '</pre>';
+    header("Refresh: 0; url=./new.php");
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // echo '</pre>';
 
 }else {
     header("Refresh: 3; url=./addForm.php");

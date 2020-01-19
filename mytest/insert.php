@@ -2,8 +2,8 @@
 require_once('./checkSession.php');
 require_once("./db.inc.php");
 
-// 確認有上傳圖片
-if( $_FILES['Img']['error'] == 0){
+
+
     
     $adImg= date('YmdHis');
     $extension = pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
@@ -11,9 +11,9 @@ if( $_FILES['Img']['error'] == 0){
 
     //確認圖片移動成功
     if( !move_uploaded_file($_FILES['Img']['tmp_name'], "./images/".$imgFileName) ){
-        header("Refresh: 3; url=./new.php");
-        echo "上傳失敗! 返回";
-        exit();
+        // header("Refresh: 3; url=./new.php");
+        echo false;
+        // exit();
     }
     //先把Plan寫進資料庫
     $sqlPlan = "INSERT INTO `plan`
@@ -38,7 +38,7 @@ if( $_FILES['Img']['error'] == 0){
         //取得plan的流水號
         $planId = $pdo->lastInsertId();
 
-        //在把ad寫進資料庫
+        // 在把ad寫進資料庫
         $sqlAd = "INSERT INTO `ad` 
                 (`Name`, `Img`,`planId`) 
                 VALUES (?, ?, ?)";
@@ -53,23 +53,21 @@ if( $_FILES['Img']['error'] == 0){
         $stmtAd->execute($arrAd);
 
         if( $stmtAd->rowCount() > 0 ){
-            header("Refresh: 3; url=./setting.php");
-            echo "上傳成功 \˙o˙/";
+            // header("Refresh: 3; url=./setting.php");
+            // echo "上傳成功 \˙o˙/";
+            echo true;
             
 
         } else {
-            header("Refresh: 3; url=./new.php");
-            echo "上傳失敗 ˊ-ˋ";
-            exit();
+            //失敗的話先刪除剛剛寫進的Plan
+            $sqlDeletePlan = "DELETE FROM `plan` WHERE `id` = ?";
+            $arrDeletePlan = [$planId];
+            $stmtDelete = $pdo->prepare($sqlDeletePlan);
+            $stmtDelete->execute($arrDeletePlan);
+            echo false;
         }
     }else {
         header("Refresh: 3; url=./new.php");
-        echo "Plan上傳失敗 ˊ-ˋ";
-        exit();
+        echo false;
+    
     }
-
-}else {
-    header("Refresh: 3; url=./new.php");
-    echo "請上傳圖片 ˊ-ˋ";
-    exit();
-}

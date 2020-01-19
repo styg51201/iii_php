@@ -20,12 +20,12 @@ require_once('./db.inc.php');
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
     <style>
-        .span{
-            padding:0 60px
-        }
         .show{
-        width:300px;
+        width:500px;
         height:100%;
         margin-left:50px;
         }
@@ -61,7 +61,7 @@ $(document).ready(function(){
             type: 'POST',
             url: './updateEditAd.php',
             // cache: false,
-            contentType: false,
+            contentType: false, //這兩個都必須要加
             processData: false,
             //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
             data: formData, 
@@ -70,21 +70,26 @@ $(document).ready(function(){
             //         Id:$('input[name=Id]').val(),
             //         Img:$('input[name=Img]').val()
             // }
+            
         })
         .done(function(data) {
             if(data){
-                alert(1);
-                // location.reload(true);
+                $(document).on('click', '.confirm', function() { 
+                    setTimeout("location='./setting.php'",100);
+                })
+                swal("修改成功", "", "success",);
+                
        
-
-
             }else{
-                alert(0);
-                // $('.alertBox').slideToggle();
+                $(document).on('click', '.confirm', function() { 
+                    setTimeout("location='./setting.php'",100);
+                })
+                swal("修改失敗", "", "error",);
+              
             };
         })
         .fail(function(){
-            alert(0);
+            alert('傳送失敗');
         })
 
     })
@@ -126,14 +131,14 @@ $(document).ready(function(){
             </div>
             <!-- 內文 -->
             <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>詳細資料</h5>
+                            </div>
                             <div class="ibox-content d-flex justify-content-around">
-                            <!-- <form name="myForm" method="POST" action="updateEditAd.php" enctype="multipart/form-data"> -->
-
-                                <table class="table">
-                                    <tbody>
+                                
                                         <?php 
 
                                         $sql = 'SELECT *
@@ -153,37 +158,31 @@ $(document).ready(function(){
                                         if( $stmt->rowCount() > 0){
                                             $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
                                     ?>
-                                        
-                                        <td colspan="2">詳細資料
-                                        <input type="hidden" name="Id" value="<?php echo $arr['Id']; ?>">
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <td>圖片名稱
-                                            <span class="span">
-                                            <input type="text" name="Name" value="<?php echo $arr['Name']; ?>" maxlength="20" />
-                                            </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>上傳
-                                            <span class="span">
-                                            <input type="file" name="Img" id="filed"/>
-                                            </span>
-                                            </td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
+                                <div class="">    
+                                     
+                                    <input type="hidden" name="Id" value="<?php echo $arr['Id']; ?>">
+
+                                    <label>圖片名稱
+                                        <input type="text" name="Name" value="<?php echo $arr['Name']; ?>" maxlength="20" />
+                                    </label>
+                                    <br>
+                                    <br>
+                                    
+                                    <label>上傳檔案
+                                        <input type="file" name="Img" id="filed"/>
+                                    </label> 
+                                    
+                                    <?php } ?>
+                                    
                                     <input type="hidden" name="editId" value="<?php echo (int)$_GET['editId']; ?>">
-                                </table>
-                                <br>
-                                <button class="submit">修改</button>
-                                <!-- <input type="submit" class="btn btn-w-m btn-success" name="smb" value="修改"> -->
-                            
-                                <!-- </form> -->
-                                    <div class="show">
+                               
+                                    <br>
+                                    <br>
+                                    <button class="submit btn btn-w-m btn-success">修改</button>
+                                </div>
+                                <div class="show">
                                         <img id="imgShow" src="./images/<?php echo $arr['Img'] ?>">
-                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -206,6 +205,10 @@ $(document).ready(function(){
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
+
+     <!-- Sweet alert -->
+     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
     <script>
         
     $('#filed').change(function(){

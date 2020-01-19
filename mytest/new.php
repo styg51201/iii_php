@@ -13,6 +13,9 @@
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
     <style>
         .ibox-content{
             min-height:500px;
@@ -65,7 +68,6 @@
                     <div class="col-lg-12">
                         <div class="ibox">
                             <div class="ibox-content">
-                                <form name="myForm" method="POST" action="./insert.php" enctype="multipart/form-data">
                                     <h3>設定圖片名稱</h3>
                                     <div style="margin-left: 23px;">
                                         <label>圖片名稱: <input type="text" name="Name" value="" maxlength="20" /></label>
@@ -85,7 +87,7 @@
                                     <br>
                                     <div>
                                         <a href="./addPlan.php" class="btn btn-w-m btn-primary">上一步</a>
-                                        <input type="submit" class="btn btn-w-m btn-success" value="確認"/>
+                                        <button class="btn btn-w-m btn-success submit">確認</button>
                                     </div>
                                 </form>
                             </div>
@@ -112,26 +114,74 @@
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
 
-    <script>
-        $('#filed').change(function(){
-        //獲取input file的files檔案陣列;
-        //$('#filed')獲取的是jQuery物件，.get(0)轉為原生物件;
-        //這邊預設只能選一個，但是存放形式仍然是陣列，所以取第一個元素使用[0];
-            var file = $('#filed').get(0).files[0];
-            //建立用來讀取此檔案的物件
-            var reader = new FileReader();
-            //使用該物件讀取file檔案
-            reader.readAsDataURL(file);
-            //讀取檔案成功後執行的方法函式
-            reader.onload=function(e){
-            //讀取成功後返回的一個引數e，整個的一個進度事件
-            //選擇所要顯示圖片的img，要賦值給img的src就是e中target下result裡面
-            //的base64編碼格式的地址
-            $('#imgShow').get(0).src = e.target.result;
-            console.log(e.target.result);
-            }
-        })
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
+    <script>
+        $(document).ready(function(){
+
+            $(document).on('click', '.submit', function() {
+
+                let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
+                // console.log(fileData);
+
+                //沒上傳圖片的提示
+                if(!fileData){
+                    swal("請上傳圖片","","error");
+                }else{
+
+                    let Name = $('input[name=Name]').val();
+                    let formData = new FormData();//建構new FormData()
+                    formData.append('Img',fileData);//把物件加到file後面
+                    formData.append('Name',Name);//加入其他資訊
+
+                    $.ajax({
+                        type: 'POST',
+                        url: './insert.php',
+                        // cache: false,
+                        contentType: false, //這兩個都必須要加
+                        processData: false,
+                        //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
+                        data: formData, 
+                    
+                    })
+                    .done(function(data) {
+                        console.log(data);
+                        if(data){
+                            $(document).on('click', '.confirm', function() { 
+                                setTimeout("location='./setting.php'",100);
+                            })
+                            swal("新增成功","","success");
+                            
+                        }else{
+                            $(document).on('click', '.confirm', function() { 
+                                setTimeout("location='./addPlan.php'",100);
+                            })
+                            swal("新增失敗","","error");
+                        
+                        };
+                    })
+                }
+            })
+
+            $('#filed').change(function(){
+            //獲取input file的files檔案陣列;
+            //$('#filed')獲取的是jQuery物件，.get(0)轉為原生物件;
+            //這邊預設只能選一個，但是存放形式仍然是陣列，所以取第一個元素使用[0];
+                var file = $('#filed').get(0).files[0];
+                //建立用來讀取此檔案的物件
+                var reader = new FileReader();
+                //使用該物件讀取file檔案
+                reader.readAsDataURL(file);
+                //讀取檔案成功後執行的方法函式
+                reader.onload=function(e){
+                //讀取成功後返回的一個引數e，整個的一個進度事件
+                //選擇所要顯示圖片的img，要賦值給img的src就是e中target下result裡面
+                //的base64編碼格式的地址
+                $('#imgShow').get(0).src = e.target.result;
+                }
+            })
+        })
     </script>
 
 </body>
