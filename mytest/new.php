@@ -41,7 +41,7 @@
             left:75%;
             transform: translate(-50%,-50%);
             padding:0px;
-            
+            display:none;
         }
        
     </style>    
@@ -149,11 +149,19 @@
     <script>
         $(document).ready(function(){
 
+            let mainText = document.querySelector('.mainText'); 
             let title = document.querySelector('.title');
+            let content = document.querySelector('.content');
+            let titleText , contentText
 
             $(document).on('keyup','input[name=title]',function(){
-                let a = $('input[name=title]').val();
-                title.innerHTML=a;
+                titleText = $('input[name=title]').val();
+                title.innerHTML=titleText;
+            })
+
+            $(document).on('keyup','input[name=content]',function(){
+                contentText = $('input[name=content]').val();
+                content.innerHTML=contentText;
             })
 
 
@@ -172,6 +180,8 @@
                     let formData = new FormData();//建構new FormData()
                     formData.append('Img',fileData);//把物件加到file後面
                     formData.append('Name',Name);//加入其他資訊
+                    formData.append('title',titleText);
+                    formData.append('content',contentText);
 
                     $.ajax({
                         type: 'POST',
@@ -219,6 +229,7 @@
                 //的base64編碼格式的地址
                 $('#imgShow').get(0).src = e.target.result;
                 }
+                mainText.style.display='block';
             })
         })
     </script>

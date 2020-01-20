@@ -40,12 +40,14 @@ require_once("./db.inc.php");
 
         // 在把ad寫進資料庫
         $sqlAd = "INSERT INTO `ad` 
-                (`Name`, `Img`,`planId`) 
-                VALUES (?, ?, ?)";
+                (`Name`, `Img`,`title`,`content`,`planId`) 
+                VALUES (?, ?, ?, ?, ?)";
 
         $arrAd=[
             $_POST['Name'],
             $imgFileName,
+            $_POST['title'],
+            $_POST['content'],
             $planId
         ];
 

@@ -165,17 +165,23 @@ $(document).ready(function(){
                                     <label>圖片名稱
                                         <input type="text" name="Name" value="<?php echo $arr['Name']; ?>" maxlength="20" />
                                     </label>
-                                    <br>
-                                    <br>
-                                    
+                                    <br><br>
                                     <label>上傳檔案
                                         <input type="file" name="Img" id="filed"/>
                                     </label> 
-                                    
+                                    <br><br>
+                                    <label>圖片標題
+                                        <input type="text" name="title" value="<?php echo $arr['title']; ?>" maxlength="20" />
+                                    </label>
+                                    <br><br>
+                                    <label>圖片內文
+                                        <input type="text" name="content" value="<?php echo $arr['content']; ?>" maxlength="50" />
+                                    </label>
+
                                     <?php } ?>
                                     
                                     <input type="hidden" name="editId" value="<?php echo (int)$_GET['editId']; ?>">
-                               
+                                    
                                     <br>
                                     <br>
                                     <button class="submit btn btn-w-m btn-success">修改</button>
