@@ -112,8 +112,8 @@
                                 <div class="show">
                                     <img id="imgShow">
                                     <div class="mainText text-center p-4">
-                                        <br><h2></h2><br><br>
-                                        <p>
+                                        <br><h2 class="title"></h2><br><br>
+                                        <p class="content">
                                         </p>
                                     
                                     </div>
@@ -149,6 +149,15 @@
     <script>
         $(document).ready(function(){
 
+            let title = document.querySelector('.title');
+
+            $(document).on('keyup','input[name=title]',function(){
+                let a = $('input[name=title]').val();
+                title.innerHTML=a;
+            })
+
+
+            //傳送
             $(document).on('click', '.submit', function() {
 
                 let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
@@ -193,6 +202,7 @@
                 }
             })
 
+            //預覽圖片
             $('#filed').change(function(){
             //獲取input file的files檔案陣列;
             //$('#filed')獲取的是jQuery物件，.get(0)轉為原生物件;
