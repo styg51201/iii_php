@@ -16,14 +16,12 @@ if( isset($_POST['username']) && isset($_POST['pwd']) ){
     $stmt->execute($arrParam);
 
     if( $stmt->rowCount() > 0 ){
-        header("Refresh: 3; url=./index.php");
         $_SESSION['username'] = $_POST['username'];
-        echo '登入成功';
+        echo true;
     }else{
-        header("Refresh: 3; url=./index.php");
-        echo "登入失敗…3秒後自動回登入頁";
+      
+        echo false;
     }
 }else {
-    header("Refresh: 3; url=./index.php");
-    echo "請確實登入…3秒後自動回登入頁";
+    echo false;
 }

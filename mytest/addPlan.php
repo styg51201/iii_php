@@ -95,12 +95,13 @@
                                     </div>
                                     <h3>選擇日期</h3>
                                     <div style="margin-left: 23px;">
+                                        <?php $today = date('Y-m-d');?>
                                         <label>開始時間: 
-                                            <input type="date" name="startTime" value="<?php echo date('Y-m-d');?>">
+                                            <input type="date" name="startTime" value="<?php echo $today;?>">
                                         </label>
                                         <br>
                                         <label>結束時間: 
-                                            <input type="date" name="dueTime">
+                                            <input type="date" name="dueTime"  value="<?php  echo date("Y-m-d", strtotime($today."+7 day"));?>">
                                         </label>
                                     </div>
                                         

@@ -14,6 +14,9 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
 </head>
 
 <body class="gray-bg">
@@ -31,7 +34,6 @@
             </p>
             <p>Login in. To see it in action.</p>
 
-            <form class="m-t" role="form" method="post" action="./loginChk.php">
 
                 <div class="form-group">
                     <input type="text" name="username" class="form-control" placeholder="Username">
@@ -41,13 +43,12 @@
                     <input type="password" name="pwd" class="form-control" placeholder="Password">
                 </div>
 
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-primary block full-width m-b submit">Login</button>
 
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>
 
-            </form>
             <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
         </div>
     </div>
@@ -57,6 +58,39 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.js"></script>
 
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $(document).on('click', '.submit', function() {
+                $.ajax({
+                    type: 'POST',
+                    url: './loginChk.php',
+                    data: {
+                        username:$('input[name=username]').val(),
+                        pwd:$('input[name=pwd]').val()
+                    }
+                })
+                .done(function(data) {
+                    if(data){
+                        $(document).on('click', '.confirm', function() { 
+                            setTimeout("location='./index.php'",100);
+                        })
+                        swal("登入成功","","success");
+                    
+
+                    }else{
+                        $(document).on('click', '.confirm', function() { 
+                            setTimeout("location='./login.php'",100);
+                        })
+                        swal("登入失敗","","error");
+                    };
+                })
+            })
+        })    
+
+    </script>
 </body>
 
 </html>
