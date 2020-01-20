@@ -2,12 +2,14 @@
 require_once('./checkSession.php');
 require_once('./db.inc.php');
 
+
 $sqlPlan = "UPDATE `plan` 
             SET 
             `name` = ?,
             `target` = ?,
             `type` = ?,
             `place` = ?,
+            `cost` = ?,
             `startTime` = ?,
             `dueTime` = ?
             WHERE `id`= ?";
@@ -16,6 +18,7 @@ $arrPlan = [$_POST['name'],
             $_POST['target'],
             $_POST['type'],
             $_POST['place'],
+            $_POST['cost'],
             $_POST['startTime'],
             $_POST['dueTime'],
             $_POST['id']
@@ -24,7 +27,7 @@ $arrPlan = [$_POST['name'],
     //     print_r($arrPlan);
     //     echo "</pre>";
     //     exit();
-
+  
 $stmtPlan = $pdo->prepare($sqlPlan);
 
         // echo "<pre>";
@@ -41,6 +44,6 @@ if( $stmtPlan->rowCount() > 0 ){
     echo true;
     exit();
 } else {
-    echo false;
+    echo true;
     exit();
 }

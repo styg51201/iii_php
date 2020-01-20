@@ -99,6 +99,6 @@ if( $stmtAd->rowCount() >0 ){
 } else {
     // header("Refresh: 3; url=./setting.php");
     // echo "沒有任何更新";
-    echo false;
+    echo true;
     exit();
 }

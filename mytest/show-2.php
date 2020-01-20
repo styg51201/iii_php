@@ -35,6 +35,7 @@ require_once('./db.inc.php');
             版面設定
         <a id="back" href="./setting.php">返回</a>
 
+        
         </h1>
 
       <h2>Free HTML5 Website Template</h2>

@@ -47,29 +47,37 @@ require_once('./db.inc.php');
                             target:$('input[name=target]').val(),
                             type:$('input[name=type]').val(),
                             place:$('input[name=place]').val(),
+                            cost:$('input[name=cost]').val(),
                             startTime:$('input[name=startTime]').val(),
                             dueTime:$('input[name=dueTime]').val(),
                             id:$('input[name=id]').val()
                     }
                 })
-                .done(function() {
-                    swal({
-                    title: "修改成功",
-                    // text: "You clicked the button!",
-                    type: "success"
-                    });
+                .done(function(data) {
+                    if(data){
+                        $(document).on('click', '.confirm', function() { 
+                            setTimeout("location='./setting.php'",100);
+                        })
+                        swal("修改成功", "", "success",);
+                        
+            
+                    }else{
+                        $(document).on('click', '.confirm', function() { 
+                            setTimeout("location='./setting.php'",100);
+                        })
+                        swal("修改失敗", "", "error",);
+              
+                    };
                 })
-                .fail(function(){
-                    alert('傳送失敗');
-                });
+                
             });
 
-            $(document).on('click', '.confirm', function() {
-                // swal.close();
-                setTimeout("location='./setting.php'",100);
-                // $(location).attr('href','./setting.php');
+            // $(document).on('click', '.confirm', function() {
+            //     // swal.close();
+            //     setTimeout("location='./setting.php'",100);
+            //     // $(location).attr('href','./setting.php');
 
-            })
+            // })
 
 
         })
@@ -171,6 +179,17 @@ require_once('./db.inc.php');
                                         </span>
                                         </td>
                                     </tr>
+                                    <?php if( $arr['cost']){ ?>
+                                    <tr>
+                                        <td>預算
+                                            <span class="span">
+                                        <input type="number" name="cost" value="<?php echo $arr['cost']; ?>" maxlength="20" />
+                                        </span>
+                                        </td>
+                                    </tr>
+                                    <?php }else{ ?>
+                                    <input type="hidden" name="cost" value="<?php echo $arr['cost']; ?>" maxlength="20" />
+                                    <?php }; ?>
                                     <tr>
                                         <td>狀態
                                             <span class="span">

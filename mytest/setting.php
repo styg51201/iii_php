@@ -30,6 +30,7 @@ require_once('./db.inc.php');
             object-fit:cover;
         }
         .alertBox{
+            margin:0px
             border:2px solid #778899;
             border-radius:30px;
             background:#DDDDDD;
@@ -42,6 +43,9 @@ require_once('./db.inc.php');
         }
         .collapse>td{
             vertical-align:middle
+        }
+        .red{
+            color:red;
         }
     </style>
         <!-- 引入 jQuery 的函式庫 -->
@@ -79,7 +83,7 @@ require_once('./db.inc.php');
             </div>
             <!-- 內文 -->
             <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row position-relative">
+                <div class="row">
                     <div class="col-lg-12">
                    <!-- 設定狀態 -->
                         <div class="ibox alertBox shadow-lg position-absolute">
@@ -123,6 +127,8 @@ require_once('./db.inc.php');
                                                     <th>目標</th>
                                                     <th>方案</th>
                                                     <th>位置</th>
+                                                    <th>預算</th>
+                                                    <th>點擊數</th>
                                                     <th>狀態</th>
                                                     <th>設定狀態</th>
                                                     <th>開始時間</th>
@@ -155,7 +161,16 @@ require_once('./db.inc.php');
                                                     <td><?php echo $arr[$i]['target'] ?></td>
                                                     <td><?php echo $arr[$i]['type'] ?></td>
                                                     <td><?php echo $arr[$i]['place'] ?></td>
-                                                    <td><?php echo $arr[$i]['status'] ?></td>
+                                                    <td>
+                                                        <?php if($arr[$i]['cost']){
+                                                            echo $arr[$i]['cost'].'元';
+                                                        }else{
+                                                            echo '-';
+                                                        } ?>
+
+                                                    </td>
+                                                    <td><?php echo $arr[$i]['click'] ?></td>
+                                                    <td class="planStatus"><?php echo $arr[$i]['status'] ?></td>
                                                     <td>
                                                         <button class="btn btn-sm btn-outline btn-primary toggle editStatus">設定
                                                             <span class="statusId" style="display:none"><?php echo $arr[$i]['id'] ?></span>
@@ -184,11 +199,13 @@ require_once('./db.inc.php');
                                                     <td colspan="2" style="vertical-align:middle"><?php echo $brr[$k]['Name'] ?></td>
                                                     <td colspan="5"><img id=imgShow src="./images/<?php echo $brr[$k]['Img'] ?>"></td>
                                                     <td style="vertical-align:middle">
-                                                    <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=<?php echo $brr[$i]['Id'] ?>">圖片瀏覽</a>
+                                                    <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=<?php echo $brr[$k]['Id'] ?>">圖片瀏覽</a>
                                                     </td>
                                                     <td style="vertical-align:middle"><a class="btn btn-sm btn-outline btn-rounded btn-primary" href="editAd.php?editId=<?php echo $brr[$k]['Id'] ?>">圖片修改</a></td>
                                                     <td style="vertical-align:middle"><button class="btn btn-sm btn-outline btn-rounded btn-danger deleteAd"><span style="display:none"><?php echo $brr[$k]['Id'] ?></span>圖片刪除</button></td>   
                                                     </td>
+                                                    <td></td>
+                                                    <td></td>
                                                     <td></td>
                                                     </tr>
                                                     <?php
@@ -238,6 +255,14 @@ require_once('./db.inc.php');
     <script>
         $(document).ready(function(){
 
+            //狀態是上架 就顯示紅色
+            let PlanStatus = document.querySelectorAll('.planStatus');
+            for(i=0; i < PlanStatus.length; i++){
+                if(PlanStatus[i].innerHTML == "上架"){
+                    PlanStatus[i].className += ' red';
+                } 
+            }
+
             let statusId;
             let status;
             //狀態設定
@@ -279,7 +304,7 @@ require_once('./db.inc.php');
                 .done(function(data) {
                     if(data){
                         $('.alertBox').slideToggle();
-                        location.reload(true);
+                        location.reload();
 
                     }else{
                         $('.alertBox').slideToggle();

@@ -55,6 +55,14 @@ require_once("./db.inc.php");
         if( $stmtAd->rowCount() > 0 ){
             // header("Refresh: 3; url=./setting.php");
             // echo "上傳成功 \˙o˙/";
+            unset($_SESSION['name']);
+            unset($_SESSION['target']);
+            unset($_SESSION['type']);
+            unset($_SESSION['cost']);
+            unset($_SESSION['place']);
+            unset($_SESSION['status']);
+            unset($_SESSION['startTime']);
+            unset($_SESSION['dueTime']);
             echo true;
             
 

@@ -1,3 +1,6 @@
+<!-- Sweet Alert -->
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
 <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
@@ -6,19 +9,12 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                            <a class="" href="./index.php">
+                                <i class="fa fa-paw"></i>首頁
                             </a>
                         </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="login.html">
+                      <li>
+                            <a class="logout">
                                 <i class="fa fa-sign-out"></i> Log out
                             </a>
                         </li>
@@ -26,3 +22,35 @@
 
                 </nav>
             </div>
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $(document).on('click','.logout',function(){
+                $.ajax({
+                    type: 'POST',
+                    url: './logout.php',
+                    data: {
+                        logout:'1'
+                        }
+                })
+                .done(function(data){
+                    if(data){
+                        $(document).on('click', '.confirm', function() { 
+                            setTimeout("location='./index.php'",100);
+                        })
+                        swal("登出成功","","success");
+                    
+
+                    }else{
+                        $(document).on('click', '.confirm', function() { 
+                            setTimeout("location='./index.php'",100);
+                        })
+                        swal("登出失敗","","error");
+                    };
+                })
+            })
+        })
+    </script>

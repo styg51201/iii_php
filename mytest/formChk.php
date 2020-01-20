@@ -9,7 +9,7 @@ require_once('./db.inc.php');
 
 // exit();
 
-if( count($_POST) == 7 && $_POST['name'] !== NUll  ){
+if( count($_POST) == 7){
 
 
     $_SESSION['target'] = $_POST['target'];

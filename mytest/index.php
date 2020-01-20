@@ -24,11 +24,11 @@ session_start();
         
             if($stmtOn->rowCount() > 0){
                 $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC)[0];
-                if( $arrOn['startTime'] <= $today && $arrOn['dueTime'] >= $today ){
-                    $backUrl = './images/'.$arrOn['Img'] ;
-                }
-                
-            }else{ $backUrl = './images/預設.jpg';
+                    if( $arrOn['startTime'] <= $today && $arrOn['dueTime'] >= $today ){
+                        $bannerUrl = './images/'.$arrOn['Img'] ;
+                        $bannerId = $arrOn['id'];
+                    }
+            }else{ $bannerUrl = './images/預設.jpg';
             }
               // $stmtDf=$pdo->query($sqlDf);
               // if($stmtDf->rowCount() > 0){
@@ -50,6 +50,8 @@ session_start();
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
+    <!-- 引入 jQuery 的函式庫 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <style>
         a {
@@ -67,19 +69,37 @@ session_start();
         .h4 {
             text-decoration: underline;
         }
+        .backImg{
+            width: 100%;
+            height: 100%;
+            object-fit:cover;
+            
+        }
+        .imgA{
+            display:block;
+            width: 100%;
+            height: 100%;
+
+        }
         
         .main {
-            background: url('<?php echo $backUrl; ?>');
-            background-size:cover;
-            background-position: center;
-            height: 600px;
+            position:relative;
+            height: 500px;
+            padding:0px;
         }
 
         .mainText {
-            background: rgba(255, 255, 255, 0.329);
+            position:absolute;
+            color:#ffffff;
+            background: rgba(0, 0, 0, 0.329);
             max-width: 60%;
             margin: auto;
             border-radius: 30px;
+            top:45%;
+            left:75%;
+            transform: translate(-50%,-50%);
+            padding:0px;
+            
         }
 
 
@@ -181,7 +201,7 @@ session_start();
                     </div>
                 </div>
                 <nav class="navbar navbar-dark">
-                    <a href="" class="navbar-brand text-white">Home</a>
+                    <a href="./index.php" class="navbar-brand text-white">Home</a>
                     <?php 
                         
                         if(isset($_SESSION['username'])){
@@ -201,18 +221,17 @@ session_start();
         </div>
     </div>
     <!-- main -->
-    <div class="main container-fluid d-flex align-items-center">
+    <div class="main container-fluid d-flex">
+        <a href="./index.php" class="imgA"><img src="<?php echo $bannerUrl;?>" class="backImg">
         <!-- 頭版上的字 -->
-        <!-- <div class="mainText text-center p-4">
-            <h1>Album example</h1>
+        <div class="mainText text-center p-4">
+        <br><h2>Album example</h2><br><br>
             <p>Something short and leading about the collection below—its contents, the creator, etc. Make it short
                 and
                 sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            <button class="btn btn-primary mr-1">Main call action</button>
-            <button class="btn btn-dark">Secondary action</button>
-
-
-        </div> -->
+        
+        </div>
+        </a>
     </div>
     <!-- card -->
     <div class="bg-light">
@@ -395,6 +414,21 @@ session_start();
 
     </div>
         <script src="js/bootstrap.js"></script>
+        <script>
+            $(document).ready(function(){
+
+                $(document).on('click','.imgA',function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: './clickCount.php',
+                        data :{
+                            id:<?php echo $bannerId; ?>
+                        }
+                    })
+
+                })
+            })
+        </script>
 </body>
 
 </html>

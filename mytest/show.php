@@ -1,40 +1,17 @@
 <?php
-
+require_once('./checkSession.php');
 require_once('./db.inc.php');
 
+        $sql = "SELECT `Img` FROM `ad` WHERE `Id` = ?";
+        $arrParam = [$_GET['showId']];
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute($arrParam);
+       
+        if($stmt->rowCount() > 0){
+            $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+            $showUrl = './images/'.$arr['Img'];
+        }
 
-            // echo $arr['startTime'];
-            // echo '<br>';
-            // echo date('Y-m-d');
-            // echo '<br>';
-
-            $sqlOn = "SELECT  *
-                    FROM `plan` INNER JOIN `ad`
-                    on `plan`.`id` = `ad`.`planId`
-                    WHERE `plan`.`status` = '上架'";
-
-            // $sqlDf = "SELECT  *
-            //           FROM `plan` INNER JOIN `ad`
-            //           on `plan`.`id` = `ad`.`planId`
-            //           WHERE `plan`.`status` = '預設'";
-            $today = date('Y-m-d');
-            $stmtOn = $pdo->query($sqlOn);
-            // echo '<pre>';
-            // print_r($sqlOn);
-            //  echo '</pre>';
-        
-            if($stmtOn->rowCount() > 0){
-                $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC)[0];
-                if( $arrOn['startTime'] <= $today && $arrOn['dueTime'] >= $today ){
-                    $backUrl = './images/'.$arrOn['Img'] ;
-                }
-                
-            }else{ $backUrl = './images/預設.jpg';
-            }
-              // $stmtDf=$pdo->query($sqlDf);
-              // if($stmtDf->rowCount() > 0){
-              //   $arrDf = $stmtDf->fetchAll(PDO::FETCH_ASSOC)[0];
-            
 ?>
 
 <!doctype html>
@@ -62,15 +39,26 @@ require_once('./db.inc.php');
             color: white;
         }
 
+
         .h4 {
             text-decoration: underline;
         }
-        
+
+        .backImg{
+            width: 100%;
+            height: 100%;
+            object-fit:cover;
+            
+        }
+        .imgA{
+            width: 100%;
+            height: 100%;
+
+        }
         .main {
-            background: url('<?php echo $backUrl; ?>');
-            background-size:cover;
-            background-position: center;
-            height: 600px;
+            height:500px;
+            padding:0px;
+
         }
 
         .mainText {
@@ -157,6 +145,7 @@ require_once('./db.inc.php');
     </div>
     <!-- main -->
     <div class="main container-fluid d-flex align-items-center">
+        <a href="./index.php" class="imgA"><img src="<?php echo $showUrl;?>" class="backImg"></a>
         <!-- 頭版上的字 -->
         <!-- <div class="mainText text-center p-4">
             <h1>Album example</h1>

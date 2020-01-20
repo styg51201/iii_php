@@ -21,13 +21,27 @@
             min-height:500px;
         }
         .show{
-        width:300px;
-        height:200px;
+            position:relative;
+            /* width:300px; */
+            height:500px;
         }
         #imgShow{
-            width:100%;
-            /* height:100%; */
+            /* width:100%; */
+            height:100%;
             object-fit:cover;
+        }
+        .mainText {
+            position:absolute;
+            color:#ffffff;
+            background: rgba(0, 0, 0, 0.329);
+            /* max-width: 60%; */
+            margin: auto;
+            border-radius: 30px;
+            top:45%;
+            left:75%;
+            transform: translate(-50%,-50%);
+            padding:0px;
+            
         }
        
     </style>    
@@ -67,35 +81,50 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox">
-                            <div class="ibox-content">
+                            <div class="ibox-content d-flex justify-content-around">
+                                <div>
                                     <h3>設定圖片名稱</h3>
                                     <div style="margin-left: 23px;">
                                         <label>圖片名稱: <input type="text" name="Name" value="" maxlength="20" /></label>
                                     </div>
 
                                     <h3>請上傳圖片</h3>
-                                    
                                     <div style="margin-left: 23px;">
                                     <!-- accept="image/*" => 只能上傳圖片檔 -->
                                         <input type="file" name="Img" id="filed" accept="image/*"/>
                                     </div>
                                     <br>
-
-                                    <div class="show">
-                                        <img id="imgShow">
-                                    <div>
+                                    <h3>設定標題</h3>
+                                    <div style="margin-left: 23px;">
+                                        <label>標題: <input type="text" name="title" value="" maxlength="10" /></label>
+                                    </div>
+                                    <h3>設定內文
+                                    </h3>
+                                    <div style="margin-left: 23px;">
+                                        <label>內文: <input type="text" name="content" value="" maxlength="50" /></label>
+                                    </div>
                                     <br>
                                     <div>
                                         <a href="./addPlan.php" class="btn btn-w-m btn-primary">上一步</a>
                                         <button class="btn btn-w-m btn-success submit">確認</button>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="show">
+                                    <img id="imgShow">
+                                    <div class="mainText text-center p-4">
+                                        <br><h2></h2><br><br>
+                                        <p>
+                                        </p>
+                                    
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
         <!-- Footer -->
         
 
