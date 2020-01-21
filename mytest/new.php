@@ -150,18 +150,18 @@
         $(document).ready(function(){
 
             let mainText = document.querySelector('.mainText'); 
-            let title = document.querySelector('.title');
-            let content = document.querySelector('.content');
-            let titleText , contentText
+            let titleText = document.querySelector('.title');
+            let contentText = document.querySelector('.content');
+            let title , content
 
             $(document).on('keyup','input[name=title]',function(){
-                titleText = $('input[name=title]').val();
-                title.innerHTML=titleText;
+                title = $('input[name=title]').val();
+                titleText.innerHTML=title;
             })
 
             $(document).on('keyup','input[name=content]',function(){
-                contentText = $('input[name=content]').val();
-                content.innerHTML=contentText;
+                content = $('input[name=content]').val();
+                contentText.innerHTML=content;
             })
 
 
@@ -180,8 +180,8 @@
                     let formData = new FormData();//建構new FormData()
                     formData.append('Img',fileData);//把物件加到file後面
                     formData.append('Name',Name);//加入其他資訊
-                    formData.append('title',titleText);
-                    formData.append('content',contentText);
+                    formData.append('title',title);
+                    formData.append('content',content);
 
                     $.ajax({
                         type: 'POST',

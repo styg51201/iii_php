@@ -2,20 +2,26 @@
 require_once('./checkSession.php');
 require_once('./db.inc.php');
 
+   
+$sqlAd = "UPDATE `ad` 
+        SET `Name` = ?,
+            `title`= ?,
+            `content`= ? ";
+
+$arrAd=[$_POST['Name'],
+        $_POST['title'],
+        $_POST['content']];
+
         // echo "<pre>";
-        // echo($_FILES['Img']['name']);
+        // print_r($_FILES);
         // echo($_POST['Id']);
         // echo($_POST['Name']);
         // print_r($arrAd);
         // echo "</pre>";
         // exit();
 
-$sqlAd = "UPDATE `ad` 
-        SET `Name` = ?";
 
-$arrAd=[$_POST['Name']];
-
-if( $_FILES["Img"]["error"] === 0 ) {
+if( isset($_FILES["Img"]["error"]) && $_FILES["Img"]["error"] === 0 ) {
 
     //為上傳檔案命名
     $strDatetime = date("YmdHis");

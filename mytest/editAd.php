@@ -25,79 +25,32 @@ require_once('./db.inc.php');
 
     <style>
         .show{
-        width:500px;
-        height:100%;
-        margin-left:50px;
+            position:relative;
+            width:500px;
+            height:400px;
         }
         #imgShow{
             width:100%;
             height:100%;
             object-fit:cover;
         }
+        .mainText {
+            position:absolute;
+            color:#ffffff;
+            background: rgba(0, 0, 0, 0.329);
+            /* max-width: 60%; */
+            margin: auto;
+            border-radius: 30px;
+            top:45%;
+            left:75%;
+            transform: translate(-50%,-50%);
+            padding:0px;
+            display:none;
+        }
     </style>
      <!-- 引入 jQuery 的函式庫 -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script>
-
-
-
-$(document).ready(function(){
-
-    //ajax 傳送上傳的檔案方法
-    $(document).on('click', '.submit', function() {
-        let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
-        let Name = $('input[name=Name]').val();
-        let Id = $('input[name=Id]').val();
-        // console.log(fileData);
-        let formData = new FormData();//建構new FormData()
-        formData.append('Img',fileData);//把物件加到file後面
-        formData.append('Name',Name);//加入其他資訊
-        formData.append('Id',Id);
-    
-        
-
-        $.ajax({
-            type: 'POST',
-            url: './updateEditAd.php',
-            // cache: false,
-            contentType: false, //這兩個都必須要加
-            processData: false,
-            //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
-            data: formData, 
-            // {
-            //         Name:$('input[name=Name]').val(),
-            //         Id:$('input[name=Id]').val(),
-            //         Img:$('input[name=Img]').val()
-            // }
-            
-        })
-        .done(function(data) {
-            if(data){
-                $(document).on('click', '.confirm', function() { 
-                    setTimeout("location='./setting.php'",100);
-                })
-                swal("修改成功", "", "success",);
-                
-       
-            }else{
-                $(document).on('click', '.confirm', function() { 
-                    setTimeout("location='./setting.php'",100);
-                })
-                swal("修改失敗", "", "error",);
-              
-            };
-        })
-        .fail(function(){
-            alert('傳送失敗');
-        })
-
-    })
-
-
-})
-
-</script>
 
 </head>
 
@@ -187,7 +140,13 @@ $(document).ready(function(){
                                     <button class="submit btn btn-w-m btn-success">修改</button>
                                 </div>
                                 <div class="show">
-                                        <img id="imgShow" src="./images/<?php echo $arr['Img'] ?>">
+                                    <img id="imgShow" src="./images/<?php echo $arr['Img'] ?>">
+                                    <div class="mainText text-center p-4">
+                                        <br><h2 class="title"></h2><br><br>
+                                        <p class="content">
+                                        </p>
+                                    
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +174,87 @@ $(document).ready(function(){
      <!-- Sweet alert -->
      <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
-    <script>
+<script>
+
+    $(document).ready(function(){
+
+        let mainText = document.querySelector('.mainText'); 
+        let titleText = document.querySelector('.title');
+        let contentText = document.querySelector('.content');
+        let title , content
+
+        $(document).on('keyup','input[name=title]',function(){
+            title = $('input[name=title]').val();
+            titleText.innerHTML=title;
+        })
+
+        $(document).on('keyup','input[name=content]',function(){
+            content = $('input[name=content]').val();
+            contentText.innerHTML=content;
+        })
+
+
+        //ajax 傳送上傳的檔案方法
+        $(document).on('click', '.submit', function() {
+            let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
+            let Name = $('input[name=Name]').val();
+            let Id = $('input[name=Id]').val();
+            let title = $('input[name=title]').val();
+            let content = $('input[name=content]').val();
+
+        // console.log(fileData);
+            let formData = new FormData();//建構new FormData()
+            formData.append('Img',fileData);//把物件加到file後面
+            formData.append('Name',Name);//加入其他資訊
+            formData.append('Id',Id);
+            formData.append('content',content);
+            formData.append('title',title);
+
+
+            $.ajax({
+                type: 'POST',
+                url: './updateEditAd.php',
+                // cache: false,
+                contentType: false, //這兩個都必須要加
+                processData: false,
+                //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
+                data: formData, 
+                // {
+                //         Name:$('input[name=Name]').val(),
+                //         Id:$('input[name=Id]').val(),
+                //         Img:$('input[name=Img]').val()
+                // }
+                
+            })
+            .done(function(data) {
+                if(data){
+                    $(document).on('click', '.confirm', function() { 
+                        setTimeout("location='./setting.php'",100);
+                    })
+                    swal("修改成功", "", "success",);
+                    
+
+                }else{
+                    $(document).on('click', '.confirm', function() { 
+                        setTimeout("location='./setting.php'",100);
+                    })
+                    swal("修改失敗", "", "error",);
+                    
+                };
+            })
+            .fail(function(){
+                alert('傳送失敗');
+            })
+
+        })
+
+
+        })
+
+</script>
+
+
+<script>
         
     $('#filed').change(function(){
     //獲取input file的files檔案陣列;
