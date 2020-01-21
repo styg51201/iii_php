@@ -1,37 +1,43 @@
 <?php
 require_once('./db.inc.php');
 session_start();
-$sqlOn = "SELECT  *
-FROM `plan` INNER JOIN `ad`
-on `plan`.`id` = `ad`.`planId`
-WHERE `plan`.`status` = '上架'
-ORDER BY `plan`.`updates_at` DESC";
 
-// $sqlDf = "SELECT  *
-//           FROM `plan` INNER JOIN `ad`
-//           on `plan`.`id` = `ad`.`planId`
-//           WHERE `plan`.`status` = '預設'";
-$today = date('Y-m-d');
-$stmtOn = $pdo->query($sqlOn);
-// echo '<pre>';
-// print_r($sqlOn);
-//  echo '</pre>';
-$bannerUrl=[];
-$bannerId=[];
-$bannerTitle=[];
-$bannerContent=[];
+            // echo $arr['startTime'];
+            // echo '<br>';
+            // echo date('Y-m-d');
+            // echo '<br>';
 
-if($stmtOn->rowCount() > 0){
-    $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC);
-    for($i=0;$i<count($arrOn);$i++){
-        if( $arrOn[$i]['startTime'] <= $today && $arrOn[$i]['dueTime'] >= $today ){
-            $bannerUrl[] = $arrOn[$i]['Img'];
-            $bannerId[] = $arrOn[$i]['id'];
-            $bannerTitle[] = $arrOn[$i]['title'];
-            $bannerContent[] = $arrOn[$i]['content'];
-        }
-    };
-};
+            $sqlOn = "SELECT  *
+                    FROM `plan` INNER JOIN `ad`
+                    on `plan`.`id` = `ad`.`planId`
+                    WHERE `plan`.`status` = '上架'";
+
+            // $sqlDf = "SELECT  *
+            //           FROM `plan` INNER JOIN `ad`
+            //           on `plan`.`id` = `ad`.`planId`
+            //           WHERE `plan`.`status` = '預設'";
+            $today = date('Y-m-d');
+            $stmtOn = $pdo->query($sqlOn);
+            // echo '<pre>';
+            // print_r($sqlOn);
+            //  echo '</pre>';
+        
+            if($stmtOn->rowCount() > 0){
+                $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC)[0];
+                    if( $arrOn['startTime'] <= $today && $arrOn['dueTime'] >= $today ){
+                        $bannerUrl = './images/'.$arrOn['Img'] ;
+                        $bannerId = $arrOn['id'];
+                        $bannerTitle = $arrOn['title'];
+                        $bannerContent = $arrOn['content'];
+                        
+                    }else{ $bannerUrl = './images/預設.jpg';
+                    }
+            }else{ $bannerUrl = './images/預設.jpg';
+            }
+              // $stmtDf=$pdo->query($sqlDf);
+              // if($stmtDf->rowCount() > 0){
+              //   $arrDf = $stmtDf->fetchAll(PDO::FETCH_ASSOC)[0];
+            
 ?>
 
 <!doctype html>
@@ -56,11 +62,6 @@ if($stmtOn->rowCount() > 0){
             text-decoration: none;
         }
 
-        .carousel-item>a>img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-        }
 
         .list-unstyled a {
             color: white;
@@ -72,6 +73,40 @@ if($stmtOn->rowCount() > 0){
         .h4 {
             text-decoration: underline;
         }
+        .bannerImg{
+            width: 100%;
+            height: 100%;
+            object-fit:cover;
+            
+        }
+        .bannerA{
+            display:block;
+            width: 100%;
+            height: 100%;
+
+        }
+        
+        .banner {
+            position:relative;
+            height: 500px;
+            padding:0px;
+        }
+
+        .bannerText {
+            position:absolute;
+            color:#ffffff;
+            background: rgba(0, 0, 0, 0.329);
+            max-width: 60%;
+            margin: auto;
+            border-radius: 30px;
+            top:45%;
+            left:75%;
+            transform: translate(-50%,-50%);
+            padding:0px;
+            
+        }
+
+
         .card>img {
             width: 100%;
             max-height: 200px;
@@ -190,65 +225,16 @@ if($stmtOn->rowCount() > 0){
         </div>
     </div>
     <!-- main -->
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-        <?php for($i=0;$i<count($bannerId);$i++){
-                // $k = $i+2;
-                echo '<li data-target="#carouselExampleCaptions" data-slide-to="'.$i.'"></li>';
-            } ?>
-            <li class="dfFirst" data-target="#carouselExampleCaptions"></li>
-            <li class="dfSecond" data-target="#carouselExampleCaptions"></li>
-            
-        </ol>
-        <div class="carousel-inner">
-            <!-- 以下 -->
-            <?php for($i=0;$i<count($bannerId);$i++){
-                echo '<div class="carousel-item">
-                        <a href="./index.php" class="bannerA">
-                        <span style="display:none">'.$bannerId[$i].'</span>
-                            <img src="./images/'.$bannerUrl[$i].'" class="d-block w-100"
-                                alt="...">
-                            <div class="carousel-caption">
-                                <h3>'.$bannerTitle[$i].'</h3>
-                                <p>'.$bannerContent[$i].'</p>
-                            </div>
-                        </a>
-                    </div>';
-                } ?>
-            <!-- 第一張 -->
-            <div class="carousel-item">
-                <a href="./index.php">
-                    <img src="https://cdn.pixabay.com/photo/2017/01/14/12/59/iceland-1979445_1280.jpg" class="d-block w-100"
-                        alt="...">
-                    <div class="carousel-caption">
-                        <h3>Example headline.</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        <!-- <button type="button" class="btn btn-info">Button</button> -->
-                    </div>
-                </a>
-            </div>
-            <!-- 第二張 -->
-            <div class="carousel-item">
-                <a href="./index.php">
-                    <img src="https://cdn.pixabay.com/photo/2019/10/14/20/09/nature-4549913_1280.jpg" class="d-block w-100"
-                        alt="...">
-                    <div class="carousel-caption">
-                        <h3>Second slide label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </a>    
-            </div>
-            <!-- 之後的圖片 -->
-            
-            <!-- 以上 -->
+    <div class="banner container-fluid d-flex">
+        <a href="./index.php" class="bannerA"><img src="<?php echo $bannerUrl;?>" class="bannerImg">
+        <!-- 頭版上的字 -->
+        <div class="bannerText text-center p-4">
+        <br><h2 class="bannerTitle">Album example</h2><br><br>
+            <p class="bannerContent">Something short and leading about the collection below—its contents, the creator, etc. Make it short
+                and
+                sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
         </a>
     </div>
     <!-- card -->
@@ -435,33 +421,22 @@ if($stmtOn->rowCount() > 0){
         <script>
             $(document).ready(function(){
 
-                //設定幻燈片的第一張
-                let firstButton = $('.carousel-indicators').find("li").first();
-                firstButton.addClass('active');
                 
-                let liButton = $('.carousel-indicators').children();
+                let arrOn = false;
 
-                if(liButton.length){ 
-                    let a =liButton.length;
-                    $('.dfFirst').attr("data-slide-to",a);
-                    $('.dfSecond').attr("data-slide-to",a+1);
+                <?php if($arrOn){ echo 'arrOn = true;';}?>
 
-                }else{
-                    $('.dfFirst').attr("data-slide-to",0);
-                    $('.dfSecond').attr("data-slide-to",1);
+                if(arrOn){
+                    $('.bannerTitle').html('<?php echo $bannerTitle ?>');
+                    $('.bannerContent').html('<?php echo $bannerContent; ?>')
                 }
-       
-                let firstImg = $('.carousel-inner').find("div").first();
-                firstImg.addClass('active');
-        
-                //計算點擊數
+
                 $(document).on('click','.bannerA',function(){
-                    bannerId = $(this).children('span').html();
                     $.ajax({
                         type: 'POST',
                         url: './clickCount.php',
                         data :{
-                            id:bannerId
+                            id:<?php echo $bannerId; ?>
                         }
                     })
 

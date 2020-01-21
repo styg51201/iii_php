@@ -26,8 +26,8 @@ require_once('./db.inc.php');
     <style>
         .show{
             position:relative;
-            width:500px;
-            height:400px;
+            width:860px;
+            height:333px;
         }
         #imgShow{
             width:100%;
@@ -37,15 +37,14 @@ require_once('./db.inc.php');
         .mainText {
             position:absolute;
             color:#ffffff;
-            background: rgba(0, 0, 0, 0.329);
-            /* max-width: 60%; */
             margin: auto;
-            border-radius: 30px;
-            top:45%;
-            left:75%;
-            transform: translate(-50%,-50%);
-            padding:0px;
-            display:none;
+            padding:20px 0px;
+            right: 15%;
+            bottom: 26px;
+            left: 15%;
+        }
+        .title{
+            margin:0px 0 16px 0;
         }
     </style>
      <!-- 引入 jQuery 的函式庫 -->
@@ -128,7 +127,7 @@ require_once('./db.inc.php');
                                     </label>
                                     <br><br>
                                     <label>圖片內文
-                                        <input type="text" name="content" value="<?php echo $arr['content']; ?>" maxlength="50" />
+                                        <input type="text" name="content" value="<?php echo $arr['content']; ?>" maxlength="40" />
                                     </label>
 
                                     <?php } ?>
@@ -141,11 +140,9 @@ require_once('./db.inc.php');
                                 </div>
                                 <div class="show">
                                     <img id="imgShow" src="./images/<?php echo $arr['Img'] ?>">
-                                    <div class="mainText text-center p-4">
-                                        <br><h2 class="title"></h2><br><br>
-                                        <p class="content">
-                                        </p>
-                                    
+                                    <div class="mainText text-center">
+                                        <h3 class="title"></h3>
+                                        <p class="content"></p>
                                     </div>
                                 </div>
                             </div>
@@ -181,17 +178,29 @@ require_once('./db.inc.php');
         let mainText = document.querySelector('.mainText'); 
         let titleText = document.querySelector('.title');
         let contentText = document.querySelector('.content');
-        let title , content
+        let title =  $('input[name=title]').val();
+        let content = $('input[name=content]').val();
 
-        $(document).on('keyup','input[name=title]',function(){
-            title = $('input[name=title]').val();
+        if( title || content){
             titleText.innerHTML=title;
+            contentText.innerHTML=content;
+            mainText.style.display='block';
+        }
+
+        $(document).on('keyup',titleText,function(){
+            title =  $('input[name=title]').val();
+            titleText.innerHTML=title;
+            mainText.style.display='block';
+            if(!title && !content ){mainText.style.display='none'};
         })
 
-        $(document).on('keyup','input[name=content]',function(){
+        $(document).on('keyup',contentText,function(){
             content = $('input[name=content]').val();
             contentText.innerHTML=content;
+            mainText.style.display='block';
+            if(!title && !content ){mainText.style.display='none'};
         })
+
 
 
         //ajax 傳送上傳的檔案方法
@@ -199,8 +208,8 @@ require_once('./db.inc.php');
             let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
             let Name = $('input[name=Name]').val();
             let Id = $('input[name=Id]').val();
-            let title = $('input[name=title]').val();
-            let content = $('input[name=content]').val();
+            title = $('input[name=title]').val();
+            content = $('input[name=content]').val();
 
         // console.log(fileData);
             let formData = new FormData();//建構new FormData()

@@ -1,5 +1,8 @@
+
+
+
+
 <!doctype html>
-<html lang="en">
 
 <head>
     <title>Bootstrap-1</title>
@@ -123,23 +126,14 @@
     <!-- 幻燈片 -->
     <div id="carouselExampleCaptions" class="carousel slide mb-5" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="0"   class="active"></li>
             <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
             <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-
+           
         </ol>
         <div class="carousel-inner">
             <!-- 以下 -->
             <div class="carousel-item active">
-                <img src="https://cdn.pixabay.com/photo/2017/01/14/12/59/iceland-1979445_1280.jpg" class="d-block w-100"
-                    alt="...">
-                <div class="carousel-caption">
-                    <h3>Example headline.</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    <button type="button" class="btn btn-info">Button</button>
-                </div>
-            </div>
-            <div class="carousel-item">
                 <img src="https://cdn.pixabay.com/photo/2019/10/14/20/09/nature-4549913_1280.jpg" class="d-block w-100"
                     alt="...">
                 <div class="carousel-caption">
@@ -158,6 +152,17 @@
                 </div>
 
             </div>
+            <div class="carousel-item">
+                <img src="https://cdn.pixabay.com/photo/2017/01/14/12/59/iceland-1979445_1280.jpg" class="d-block w-100"
+                    alt="...">
+                <div class="carousel-caption">
+                    <h3>Example headline.</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    <button type="button" class="btn btn-info">Button</button>
+                </div>
+            </div>
+            
+            
             <!-- 以上 -->
         </div>
         <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">

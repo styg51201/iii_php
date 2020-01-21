@@ -22,26 +22,25 @@
         }
         .show{
             position:relative;
-            /* width:300px; */
-            height:500px;
+            width:860px;
+            height:333px;
         }
         #imgShow{
-            /* width:100%; */
+            width:100%;
             height:100%;
             object-fit:cover;
         }
         .mainText {
             position:absolute;
             color:#ffffff;
-            background: rgba(0, 0, 0, 0.329);
-            /* max-width: 60%; */
             margin: auto;
-            border-radius: 30px;
-            top:45%;
-            left:75%;
-            transform: translate(-50%,-50%);
-            padding:0px;
-            display:none;
+            padding:20px 0px;
+            right: 15%;
+            bottom: 26px;
+            left: 15%;
+        }
+        .title{
+            margin:0px 0 16px 0;
         }
        
     </style>    
@@ -96,12 +95,12 @@
                                     <br>
                                     <h3>設定標題</h3>
                                     <div style="margin-left: 23px;">
-                                        <label>標題: <input type="text" name="title" value="" maxlength="10" /></label>
+                                        <label>標題: <input type="text" name="title" value="" maxlength="20" /></label>
                                     </div>
                                     <h3>設定內文
                                     </h3>
                                     <div style="margin-left: 23px;">
-                                        <label>內文: <input type="text" name="content" value="" maxlength="50" /></label>
+                                        <label>內文: <input type="text" name="content" value="" maxlength="40" /></label>
                                     </div>
                                     <br>
                                     <div>
@@ -111,11 +110,9 @@
                                 </div>
                                 <div class="show">
                                     <img id="imgShow">
-                                    <div class="mainText text-center p-4">
-                                        <br><h2 class="title"></h2><br><br>
-                                        <p class="content">
-                                        </p>
-                                    
+                                    <div class="mainText text-center">
+                                        <h3 class="title" style="margin:0px 0 8px 0;"></h3>
+                                        <p class="content"></p>
                                     </div>
                                 </div>
                             </div>
@@ -152,16 +149,20 @@
             let mainText = document.querySelector('.mainText'); 
             let titleText = document.querySelector('.title');
             let contentText = document.querySelector('.content');
-            let title , content
+            let title , content ;
 
             $(document).on('keyup','input[name=title]',function(){
                 title = $('input[name=title]').val();
                 titleText.innerHTML=title;
+                mainText.style.display='block';
+                if(!title && !content ){mainText.style.display='none'};
             })
 
             $(document).on('keyup','input[name=content]',function(){
                 content = $('input[name=content]').val();
                 contentText.innerHTML=content;
+                mainText.style.display='block';
+                if(!title && !content ){mainText.style.display='none'};
             })
 
 
@@ -229,7 +230,6 @@
                 //的base64編碼格式的地址
                 $('#imgShow').get(0).src = e.target.result;
                 }
-                mainText.style.display='block';
             })
         })
     </script>

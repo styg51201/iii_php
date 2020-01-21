@@ -24,7 +24,7 @@
             </div>
     <!-- Sweet alert -->
     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="js/jquery-3.1.1.min.js"></script>
+    <!-- <script src="js/jquery-3.1.1.min.js"></script> -->
 
     <script>
        $(document).ready(function(){

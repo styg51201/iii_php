@@ -21,8 +21,7 @@ require_once('./db.inc.php');
 
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-
-
+    
     <style>
         .span{
             padding:0 60px
@@ -34,6 +33,7 @@ require_once('./db.inc.php');
 
         <!-- 引入 jQuery 的函式庫 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
 
         <script>
         $(document).ready(function(){

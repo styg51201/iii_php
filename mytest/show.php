@@ -2,7 +2,7 @@
 require_once('./checkSession.php');
 require_once('./db.inc.php');
 
-        $sql = "SELECT `Img` FROM `ad` WHERE `Id` = ?";
+        $sql = "SELECT * FROM `ad` WHERE `Id` = ?";
         $arrParam = [$_GET['showId']];
         $stmt=$pdo->prepare($sql);
         $stmt->execute($arrParam);
@@ -10,6 +10,9 @@ require_once('./db.inc.php');
         if($stmt->rowCount() > 0){
             $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
             $showUrl = './images/'.$arr['Img'];
+            $showTitle = $arr['title'];
+            $showContent = $arr['content'];
+
         }
 
 ?>
@@ -34,7 +37,6 @@ require_once('./db.inc.php');
             text-decoration: none;
         }
 
-
         .list-unstyled a {
             color: white;
         }
@@ -44,30 +46,34 @@ require_once('./db.inc.php');
             text-decoration: underline;
         }
 
-        .backImg{
+        .bannerImg{
             width: 100%;
             height: 100%;
             object-fit:cover;
             
         }
-        .imgA{
+        .bannerA{
+            display:block;
             width: 100%;
             height: 100%;
 
         }
-        .main {
-            height:500px;
+        
+        .banner {
+            position:relative;
+            height: 500px;
             padding:0px;
-
         }
 
-        .mainText {
-            background: rgba(255, 255, 255, 0.329);
-            max-width: 60%;
+        .bannerText {
+            position:absolute;
+            color:#ffffff;
             margin: auto;
-            border-radius: 30px;
+            padding:0px;
+            right: 15%;
+            bottom: 40px;
+            left: 15%;
         }
-
 
         .card>img {
             width: 100%;
@@ -77,11 +83,11 @@ require_once('./db.inc.php');
         }
 
         @media screen and (max-width:768px) {
-            .main {
+            .banner {
                 height: 300px;
             }
 
-            .mainText {
+            .bannerText {
                 max-width: 80%;
             }
         }
@@ -144,19 +150,14 @@ require_once('./db.inc.php');
         </div>
     </div>
     <!-- main -->
-    <div class="main container-fluid d-flex align-items-center">
-        <a href="./index.php" class="imgA"><img src="<?php echo $showUrl;?>" class="backImg"></a>
+    <div class="banner container-fluid d-flex">
+        <a class="bannerA"><img src="<?php echo $showUrl;?>" class="bannerImg">
         <!-- 頭版上的字 -->
-        <!-- <div class="mainText text-center p-4">
-            <h1>Album example</h1>
-            <p>Something short and leading about the collection below—its contents, the creator, etc. Make it short
-                and
-                sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            <button class="btn btn-primary mr-1">Main call action</button>
-            <button class="btn btn-dark">Secondary action</button>
-
-
-        </div> -->
+        <div class="bannerText text-center">
+        <h3 class="bannerTitle"><?php echo $showTitle;?></h3>
+        <p class="bannerContent"><?php echo $showContent;?></p>
+        </div>
+        </a>
     </div>
     <!-- card -->
     <div class="dontShow">

@@ -180,7 +180,6 @@ require_once('./db.inc.php');
                                                     <td><?php echo $arr[$i]['dueTime'] ?></td>
                                                     <td><a class="btn btn-sm btn-primary" href="editPlan.php?editId=<?php echo $arr[$i]['id'] ?>">修改</a></td>
                                                     <td><button class="btn btn-sm btn-danger deletePlan"><span style="display:none"><?php echo $arr[$i]['id'] ?></span>刪除</button></td>
-                                                     
                                                     <?php 
                                                         $sqlAd = 'SELECT *
                                                         FROM `ad`

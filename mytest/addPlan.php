@@ -17,8 +17,17 @@ require_once('./db.inc.php');
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <!-- 引入 jQuery 的函式庫 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- JQ UI CSS -->
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />       
+      
+      <!-- 引入 jQuery 的函式庫 -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>  
+  
+      <!-- JQ UI -->
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>      
+        
 
     <style>
         .cost{
@@ -62,6 +71,7 @@ require_once('./db.inc.php');
                         <div class="ibox ">
                             <div class="ibox-content">
                                 <form name="myForm" method="post" action="./formChk.php">
+
                                     <h3>選擇廣告活動目標</h3>
                                     <div style="margin-left: 23px;">
                                         <label>
@@ -136,8 +146,33 @@ require_once('./db.inc.php');
 
     </div>
     </div>
+  
+       
+        
+
+
+    
+    <!-- Mainly scripts -->
+    <!-- <script src="js/jquery-3.1.1.min.js"></script> -->
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <!-- Steps -->
+    <script src="js/plugins/steps/jquery.steps.min.js"></script>
+
+    <!-- Jquery Validate -->
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+
+
     <script>
         $(document).ready(function(){
+
             let cost = document.querySelector('.cost');
             
 
@@ -160,22 +195,6 @@ require_once('./db.inc.php');
         })
     </script>    
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
-
-    <!-- Steps -->
-    <script src="js/plugins/steps/jquery.steps.min.js"></script>
-
-    <!-- Jquery Validate -->
-    <script src="js/plugins/validate/jquery.validate.min.js"></script>
 
 </body>
 
