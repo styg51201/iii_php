@@ -30,6 +30,12 @@ if($stmtOn->rowCount() > 0){
             $bannerTitle[] = $arrOn[$i]['title'];
             $bannerContent[] = $arrOn[$i]['content'];
         }
+        if($arrOn[$i]['dueTime'] < $today){
+            $sqlEdit = "UPDATE `plan` SET `status` = '下架' WHERE `id` = ?";
+            $arrEdit = [$arrOn[$i]['id']];
+            $stmtEdit = $pdo->prepare($sqlEdit);
+            $stmtEdit->execute($arrEdit);
+        }
     };
 };
 ?>

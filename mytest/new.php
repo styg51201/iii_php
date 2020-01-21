@@ -24,10 +24,13 @@
             position:relative;
             width:860px;
             height:333px;
+            /* display:none; */
         }
         #imgShow{
             width:100%;
             height:100%;
+            height:333px;
+
             object-fit:cover;
         }
         .mainText {
@@ -145,7 +148,7 @@
 
     <script>
         $(document).ready(function(){
-
+            let show = document.querySelector('.show'); 
             let mainText = document.querySelector('.mainText'); 
             let titleText = document.querySelector('.title');
             let contentText = document.querySelector('.content');
@@ -229,6 +232,7 @@
                 //選擇所要顯示圖片的img，要賦值給img的src就是e中target下result裡面
                 //的base64編碼格式的地址
                 $('#imgShow').get(0).src = e.target.result;
+                show.style.display='block';
                 }
             })
         })
