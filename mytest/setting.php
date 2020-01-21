@@ -270,11 +270,13 @@ require_once('./db.inc.php');
 
             let statusId;
             let status;
+            let editAjax
             //狀態設定
             $(document).on('click', 'button.editStatus', function(){
     
                 statusId = $(this).children('span').html();
                 status = $(this).parent().prev().html();
+                editStatusAjax = $(this).parent().prev();
 
                 if(status == '審核'){
                     $("input[name=status]").attr("checked",false);
@@ -298,6 +300,7 @@ require_once('./db.inc.php');
 
             //狀態修改的Ajax
             $(document).on('click', '.submit', function() {
+                let updateStatus = $('input[name=status]:checked').val();
                 $.ajax({
                     type: 'POST',
                     url: './updatePlanStatus.php',
@@ -309,8 +312,14 @@ require_once('./db.inc.php');
                 .done(function(data) {
                     if(data){
                         $('.alertBox').slideToggle();
-                        location.reload();
+                        if(updateStatus == '上架'){
+                            editStatusAjax.attr('class','planStatus red');
+                        }else{
+                            editStatusAjax.attr('class','planStatus');
 
+                        }
+                        editStatusAjax.html(updateStatus);
+                         
                     }else{
                         $('.alertBox').slideToggle();
                     };
