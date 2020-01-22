@@ -371,7 +371,8 @@ require_once('./db.inc.php');
             $(document).on('click', '.deletePlan', function() {
                 
                 let deletePlanId = $(this).children('span').html();
-
+                let deletePlanTr = $(this).parent().parent();
+        
                 swal({
                     title: "確定刪除廣告活動?",
                     text: "",
@@ -392,9 +393,10 @@ require_once('./db.inc.php');
                         })
                         .done(function(data) {
                             if(data){
-                                $(document).on('click', '.confirm', function() { 
-                                    setTimeout("location.reload(true)",100);
-                                })
+                                // $(document).on('click', '.confirm', function() { 
+                                //     setTimeout("location.reload(true)",100);
+                                // })
+                                deletePlanTr.remove();
                                 swal("刪除成功", "", "success",);
                                 
                                 

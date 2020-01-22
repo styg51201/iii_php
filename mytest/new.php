@@ -41,6 +41,7 @@
             right: 15%;
             bottom: 26px;
             left: 15%;
+           
         }
         .title{
             margin:0px 0 16px 0;

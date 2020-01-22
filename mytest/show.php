@@ -52,6 +52,11 @@ require_once('./db.inc.php');
             object-fit:cover;
             
         }
+        .carousel-caption{
+            background:rgba(0, 0, 0, 0.2);
+            width:30%;
+            margin:0 auto;
+        }
         .bannerA{
             display:block;
             width: 100%;

@@ -68,6 +68,8 @@ if($stmtOn->rowCount() > 0){
             object-fit: cover;
         }
 
+       
+
         .list-unstyled a {
             color: white;
         }
