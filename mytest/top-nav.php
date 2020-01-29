@@ -27,7 +27,7 @@
     <!-- <script src="js/jquery-3.1.1.min.js"></script> -->
 
     <script>
-       $(document).ready(function(){
+      
 
             $(document).on('click','.logout',function(){
                 $.ajax({
@@ -53,5 +53,5 @@
                     };
                 })
             })
-        })
+       
     </script>

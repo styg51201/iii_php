@@ -2,14 +2,14 @@
 require_once('./checkSession.php');
 require_once('./db.inc.php');
 
-        $sql = "SELECT * FROM `ad` WHERE `Id` = ?";
+        $sql = "SELECT * FROM `ad` WHERE `adId` = ?";
         $arrParam = [$_GET['showId']];
         $stmt=$pdo->prepare($sql);
         $stmt->execute($arrParam);
        
         if($stmt->rowCount() > 0){
             $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
-            $showUrl = './images/'.$arr['Img'];
+            $showUrl = './images/'.$arr['img'];
             $showTitle = $arr['title'];
             $showContent = $arr['content'];
 

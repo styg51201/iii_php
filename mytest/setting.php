@@ -191,23 +191,23 @@ require_once('./db.inc.php');
                                                             $brr = $stmtAd->fetchAll(PDO::FETCH_ASSOC);
                                                             for($k=0; $k < count($brr); $k++){ 
                                                     ?>
-                                                    <td><button class="fa fa-angle-double-down btn btn-circle"  data-toggle="collapse" data-target="#collapse<?php echo $brr[$k]['Id'] ?>" aria-expanded="false" aria-controls="collapse<?php echo $brr[$k]['Id'] ?>">
+                                                    <td><button class="fa fa-angle-double-down btn btn-circle"  data-toggle="collapse" data-target="#collapse<?php echo $brr[$k]['adId'] ?>" aria-expanded="false" aria-controls="collapse<?php echo $brr[$k]['adId'] ?>">
                                                             </button></td>
-                                                    <tr  class="collapse" id="collapse<?php echo $brr[$k]['Id'] ?>">
+                                                    <tr  class="collapse" id="collapse<?php echo $brr[$k]['adId'] ?>">
                                                     <th style="vertical-align:middle">圖片名稱:</th>
-                                                    <td style="vertical-align:middle"><?php echo $brr[$k]['Name'] ?></td>
+                                                    <td style="vertical-align:middle"><?php echo $brr[$k]['adName'] ?></td>
                                                     <th style="vertical-align:middle">圖片標題:</th>
                                                     <td colspan="1" style="vertical-align:middle"><?php echo $brr[$k]['title'] ?></td>
                                                     <th style="vertical-align:middle">圖片內文:</th>
                                                     <td colspan="2" style="vertical-align:middle"><?php echo $brr[$k]['content'] ?></td>
-                                                    <td colspan="5"><img id=imgShow src="./images/<?php echo $brr[$k]['Img'] ?>"></td>
+                                                    <td colspan="5"><img id=imgShow src="./images/<?php echo $brr[$k]['img'] ?>"></td>
                                                     <td style="vertical-align:middle">
                                                     <!-- vertical-align:middle -->
-                                                    <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=<?php echo $brr[$k]['Id'] ?>">圖片瀏覽</a>
+                                                    <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=<?php echo $brr[$k]['adId'] ?>">圖片瀏覽</a>
                                                     <br>
-                                                    <a style="margin:20px 0px" class="btn btn-sm btn-outline btn-rounded btn-primary" href="editAd.php?editId=<?php echo $brr[$k]['Id'] ?>">圖片修改</a>
+                                                    <a style="margin:20px 0px" class="btn btn-sm btn-outline btn-rounded btn-primary" href="editAd.php?editId=<?php echo $brr[$k]['adId'] ?>">圖片修改</a>
                                                     <br>
-                                                    <button class="btn btn-sm btn-outline btn-rounded btn-danger deleteAd"><span style="display:none"><?php echo $brr[$k]['Id'] ?></span>圖片刪除</button>
+                                                    <button class="btn btn-sm btn-outline btn-rounded btn-danger deleteAd"><span style="display:none"><?php echo $brr[$k]['adId'] ?></span>圖片刪除</button>
                                                     </td>
                                                     <td></td>
                                                     <td></td>

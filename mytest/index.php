@@ -25,7 +25,7 @@ if($stmtOn->rowCount() > 0){
     $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC);
     for($i=0;$i<count($arrOn);$i++){
         if( $arrOn[$i]['startTime'] <= $today && $arrOn[$i]['dueTime'] >= $today ){
-            $bannerUrl[] = $arrOn[$i]['Img'];
+            $bannerUrl[] = $arrOn[$i]['img'];
             $bannerId[] = $arrOn[$i]['id'];
             $bannerTitle[] = $arrOn[$i]['title'];
             $bannerContent[] = $arrOn[$i]['content'];

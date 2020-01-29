@@ -4,11 +4,11 @@ require_once('./db.inc.php');
 
    
 $sqlAd = "UPDATE `ad` 
-        SET `Name` = ?,
+        SET `adName` = ?,
             `title`= ?,
             `content`= ? ";
 
-$arrAd=[$_POST['Name'],
+$arrAd=[$_POST['adName'],
         $_POST['title'],
         $_POST['content']];
 
@@ -21,15 +21,15 @@ $arrAd=[$_POST['Name'],
         // exit();
 
 
-if( isset($_FILES["Img"]["error"]) && $_FILES["Img"]["error"] === 0 ) {
+if( isset($_FILES["img"]["error"]) && $_FILES["img"]["error"] === 0 ) {
 
     //為上傳檔案命名
     $strDatetime = date("YmdHis");
-    $extension = pathinfo($_FILES["Img"]["name"], PATHINFO_EXTENSION);
+    $extension = pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION);
     $Img = $strDatetime.".".$extension;
 
     //若上傳成功，則將上傳檔案從暫存資料夾，移動到指定的資料夾或路徑
-    if( move_uploaded_file($_FILES["Img"]["tmp_name"], "./images/".$Img) ) {
+    if( move_uploaded_file($_FILES["img"]["tmp_name"], "./images/".$Img) ) {
 
         /**
          * 刪除先前的舊檔案: 
@@ -39,11 +39,11 @@ if( isset($_FILES["Img"]["error"]) && $_FILES["Img"]["error"] === 0 ) {
          *  */ 
 
         //先查詢出特定 id (editId) 資料欄位中的大頭貼檔案名稱
-        $sqlGetImg = "SELECT `Img` FROM `ad` WHERE `Id` = ? ";
+        $sqlGetImg = "SELECT `img` FROM `ad` WHERE `adId` = ? ";
     
         //加入繫結陣列
         $arrGetImgParam = [
-            (int)$_POST['Id']
+            (int)$_POST['adId']
         ];
 
         //執行 SQL 語法
@@ -57,10 +57,10 @@ if( isset($_FILES["Img"]["error"]) && $_FILES["Img"]["error"] === 0 ) {
             $arrImg = $stmtGetImg->fetchAll(PDO::FETCH_ASSOC);
 
             //若是 studentImg 裡面不為空值，代表過去有上傳過
-            if($arrImg[0]['Img'] !== NULL){
+            if($arrImg[0]['img'] !== NULL){
                 //刪除實體檔案
                 //@ 是為了抑制出錯 讓程式往下走, 若是指定的路徑沒有檔案則會無法刪除 , 就會出錯 
-                @unlink("./images/".$arrImg[0]['Img']);
+                @unlink("./images/".$arrImg[0]['img']);
             } 
             
             /**
@@ -74,7 +74,7 @@ if( isset($_FILES["Img"]["error"]) && $_FILES["Img"]["error"] === 0 ) {
             $sqlAd.= ",";
 
             //studentImg SQL 語句字串
-            $sqlAd.= "`Img` = ? ";
+            $sqlAd.= "`img` = ? ";
 
             //僅對 studentImg 進行資料繫結
             //push到 陣列最後
@@ -84,8 +84,8 @@ if( isset($_FILES["Img"]["error"]) && $_FILES["Img"]["error"] === 0 ) {
     }
 }
 
-$sqlAd.= " WHERE `Id` = ? ";
-$arrAd[] = (int)$_POST['Id'];
+$sqlAd.= " WHERE `adId` = ? ";
+$arrAd[] = (int)$_POST['adId'];
 
 $stmtAd = $pdo->prepare($sqlAd);
 

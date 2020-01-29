@@ -88,13 +88,13 @@
                                 <div>
                                     <h3>設定圖片名稱</h3>
                                     <div style="margin-left: 23px;">
-                                        <label>圖片名稱: <input type="text" name="Name" value="" maxlength="20" /></label>
+                                        <label>圖片名稱: <input type="text" name="adName" value="" maxlength="20" /></label>
                                     </div>
 
                                     <h3>請上傳圖片</h3>
                                     <div style="margin-left: 23px;">
                                     <!-- accept="image/*" => 只能上傳圖片檔 -->
-                                        <input type="file" name="Img" id="filed" accept="image/*"/>
+                                        <input type="file" name="img" id="filed" accept="image/*"/>
                                     </div>
                                     <br>
                                     <h3>設定標題</h3>
@@ -181,13 +181,13 @@
                     swal("請上傳圖片","","error");
                 }else{
 
-                    let Name = $('input[name=Name]').val();
+                    let adName = $('input[name=adName]').val();
                     let title = $('input[name=title]').val();
                     let content = $('input[name=content]').val();
 
                     let formData = new FormData();//建構new FormData()
-                    formData.append('Img',fileData);//把物件加到file後面
-                    formData.append('Name',Name);//加入其他資訊
+                    formData.append('img',fileData);//把物件加到file後面
+                    formData.append('adName',adName);//加入其他資訊
                     formData.append('title',title);
                     formData.append('content',content);
 

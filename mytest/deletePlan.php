@@ -15,7 +15,7 @@ $stmtPlan->execute($arrPlan);
 
 
 //先刪除實體照片檔
-$sqlImg = "SELECT `Img` FROM `ad` WHERE `planId` = ?";
+$sqlImg = "SELECT `img` FROM `ad` WHERE `planId` = ?";
 $stmtImg = $pdo->prepare($sqlImg);
 
 //確認有沒有錯誤
@@ -33,8 +33,8 @@ $stmtImg->execute($arrImg);
 if( $stmtImg->rowCount() > 0 ){
     $arr = $stmtImg->fetchAll(PDO::FETCH_ASSOC)[0];
 
-    if( $arr['Img'] !== NULL){
-        @unlink("./images/".$arr['Img']);
+    if( $arr['img'] !== NULL){
+        @unlink("./images/".$arr['img']);
     }
 }
 

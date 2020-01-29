@@ -30,11 +30,11 @@ $stmt->execute($arr);
 
 
 if( $stmt->rowCount() > 0 ){
-        header("Refresh: 3; url=./setting.php");
+        // header("Refresh: 3; url=./setting.php");
         echo true;
         exit();
     } else {
-        header("Refresh: 3; url=./setting.php");
+        // header("Refresh: 3; url=./setting.php");
         echo false;
         exit();
     }

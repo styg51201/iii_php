@@ -95,7 +95,7 @@ require_once('./db.inc.php');
 
                                         $sql = 'SELECT *
                                         FROM `ad` 
-                                        WHERE `Id` = ?';
+                                        WHERE `adId` = ?';
 
                                         $arrParam = [$_GET['editId'],
                                                 ];
@@ -112,14 +112,14 @@ require_once('./db.inc.php');
                                     ?>
                                 <div class="">    
                                      
-                                    <input type="hidden" name="Id" value="<?php echo $arr['Id']; ?>">
+                                    <input type="hidden" name="adId" value="<?php echo $arr['adId']; ?>">
 
                                     <label>圖片名稱
-                                        <input type="text" name="Name" value="<?php echo $arr['Name']; ?>" maxlength="20" />
+                                        <input type="text" name="adName" value="<?php echo $arr['adName']; ?>" maxlength="20" />
                                     </label>
                                     <br><br>
                                     <label>上傳檔案
-                                        <input type="file" name="Img" id="filed"/>
+                                        <input type="file" name="img" id="filed"/>
                                     </label> 
                                     <br><br>
                                     <label>圖片標題
@@ -139,7 +139,7 @@ require_once('./db.inc.php');
                                     <button class="submit btn btn-w-m btn-success">修改</button>
                                 </div>
                                 <div class="show">
-                                    <img id="imgShow" src="./images/<?php echo $arr['Img'] ?>">
+                                    <img id="imgShow" src="./images/<?php echo $arr['img'] ?>">
                                     <div class="mainText text-center">
                                         <h3 class="title"></h3>
                                         <p class="content"></p>
@@ -206,16 +206,16 @@ require_once('./db.inc.php');
         //ajax 傳送上傳的檔案方法
         $(document).on('click', '.submit', function() {
             let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
-            let Name = $('input[name=Name]').val();
-            let Id = $('input[name=Id]').val();
+            let adName = $('input[name=adName]').val();
+            let adId = $('input[name=adId]').val();
             title = $('input[name=title]').val();
             content = $('input[name=content]').val();
 
         // console.log(fileData);
             let formData = new FormData();//建構new FormData()
-            formData.append('Img',fileData);//把物件加到file後面
-            formData.append('Name',Name);//加入其他資訊
-            formData.append('Id',Id);
+            formData.append('img',fileData);//把物件加到file後面
+            formData.append('adName',adName);//加入其他資訊
+            formData.append('adId',adId);
             formData.append('content',content);
             formData.append('title',title);
 

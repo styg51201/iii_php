@@ -6,11 +6,11 @@ require_once("./db.inc.php");
 
     
     $adImg= date('YmdHis');
-    $extension = pathinfo($_FILES['Img']['name'], PATHINFO_EXTENSION);
+    $extension = pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
     $imgFileName = $adImg.".".$extension;
 
     //確認圖片移動成功
-    if( !move_uploaded_file($_FILES['Img']['tmp_name'], "./images/".$imgFileName) ){
+    if( !move_uploaded_file($_FILES['img']['tmp_name'], "./images/".$imgFileName) ){
         // header("Refresh: 3; url=./new.php");
         echo false;
         // exit();
@@ -40,11 +40,11 @@ require_once("./db.inc.php");
 
         // 在把ad寫進資料庫
         $sqlAd = "INSERT INTO `ad` 
-                (`Name`, `Img`,`title`,`content`,`planId`) 
+                (`adName`, `img`,`title`,`content`,`planId`) 
                 VALUES (?, ?, ?, ?, ?)";
 
         $arrAd=[
-            $_POST['Name'],
+            $_POST['adName'],
             $imgFileName,
             $_POST['title'],
             $_POST['content'],
@@ -77,7 +77,7 @@ require_once("./db.inc.php");
             echo false;
         }
     }else {
-        header("Refresh: 3; url=./new.php");
+        // header("Refresh: 3; url=./new.php");
         echo false;
     
     }

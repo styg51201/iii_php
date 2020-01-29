@@ -3,7 +3,7 @@ require_once('./checkSession.php');
 require_once('./db.inc.php');
 
 //先刪除實體照片檔
-$sqlImg = "SELECT `Img` FROM `ad` WHERE `Id` = ?";
+$sqlImg = "SELECT `img` FROM `ad` WHERE `adId` = ?";
 $stmtImg = $pdo->prepare($sqlImg);
 
 //確認有沒有錯誤
@@ -21,13 +21,13 @@ $stmtImg->execute($arrImg);
 if( $stmtImg->rowCount() > 0 ){
     $arr = $stmtImg->fetchAll(PDO::FETCH_ASSOC)[0];
 
-    if( $arr['Img'] !== NULL){
-        @unlink("./images/".$arr['Img']);
+    if( $arr['img'] !== NULL){
+        @unlink("./images/".$arr['img']);
     }
 }
 
 
-$sql = "DELETE FROM `ad` WHERE `Id` = ?";
+$sql = "DELETE FROM `ad` WHERE `adId` = ?";
 
 // echo "<pre>";
 //     print_r($_POST);
