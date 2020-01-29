@@ -182,6 +182,9 @@
                 }else{
 
                     let Name = $('input[name=Name]').val();
+                    let title = $('input[name=title]').val();
+                    let content = $('input[name=content]').val();
+
                     let formData = new FormData();//建構new FormData()
                     formData.append('Img',fileData);//把物件加到file後面
                     formData.append('Name',Name);//加入其他資訊
