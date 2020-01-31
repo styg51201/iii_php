@@ -23,7 +23,24 @@ require_once('./db.inc.php');
      <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
      <script src="js/jquery-3.1.1.min.js"></script>
 
-
+    <style>
+        .itemImg{
+            width:200px;
+            height:200px;
+        }
+        label{
+            text-align: center;
+            margin:10px;
+        }
+        .itemImg img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        .infoItem{
+            margin:10px;
+        }
+    </style>
 
 </head>
 
@@ -59,24 +76,6 @@ require_once('./db.inc.php');
                     <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-content">
-
-                                <h3>選擇目標</h3>
-                                <div style="margin-left: 23px;">
-                                    <label>
-                                        <input type="radio" class="form-check-input" name="object" value="全部"
-                                            checked>全部商品
-                                    </label>
-                                    <br>
-                                    <label>
-                                        <input type="radio" class="form-check-input" name="object" value="分類"
-                                            >分類商品
-                                    </label>
-                                    <br>
-                                    <label>
-                                        <input type="radio" class="form-check-input" name="object" value="指定"
-                                            >指定商品
-                                    </label>
-                                </div>
                                 <h3>選擇條件</h3>
                                 <div style="margin-left: 23px;">
                                     <label>
@@ -114,6 +113,27 @@ require_once('./db.inc.php');
                                 <div style="margin-left: 23px;">
                                     <label>設定金額為: <input type="number" name="discountNumber" value=""> 元/%</label>
                                 </div>
+
+                                <h3>選擇目標</h3>
+                                <div style="margin-left: 23px;">
+                                    <label class="all">
+                                        <input type="radio" class="form-check-input" name="object" value="全部"
+                                            checked>全部商品
+                                    </label>
+                                    <br>
+                                    <label class="sort">
+                                        <input type="radio" class="form-check-input" name="object" value="分類"
+                                            >分類商品
+                                    </label>
+                                    <br>
+                                    <label class="item">
+                                        <input type="radio" class="form-check-input" name="object" value="指定"
+                                            >指定商品
+                                    </label>
+                                </div>
+                                <div class="sortDiv">
+                                    
+                                </div>
                                 <button class="btn btn-w-m btn-success submit">確認</button>
                             </div>
                         </div>
@@ -141,7 +161,58 @@ require_once('./db.inc.php');
     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <script>
-$(document).ready(function(){
+        $('.all').click(function(){
+            $('.sortDiv').html("");
+        })
+
+        $('.sort').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: './sort.php',
+                data:{check:'sort'}
+            })
+            .done(function(data){
+                //parse 變成JSON物件 要顯示文字再stringify
+                // JSON.stringify( JSON.parse(data));
+                data = JSON.parse(data);
+                $('.sortDiv').html("")
+                $('.sortDiv').html(`<h3>請選擇商品</h3>
+                                    <div class="info" style="margin-left: 23px;">
+                                    </div>`)
+                for(i=0;i<data.length;i++){
+                    $('.info').append(`<label><input type="checkbox">${data[i]['categoryName']}</label>`)
+                }
+              
+            })
+        })
+
+        $('.item').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: './sort.php',
+                data:{check:'item'}
+            })
+            .done(function(data){
+                // alert(data);
+                data = JSON.parse(data);
+                
+                $('.sortDiv').html("")
+                $('.sortDiv').html(`<h3>請選擇商品</h3>
+                                    <div class="infoItem" style="margin-left: 23px;">
+                                    </div>`)
+                for(i=0;i<data.length;i++){
+                    $('.infoItem').append(`<label>
+                                        <input type="checkbox">
+                                        <p>${data[i]['itemName']}</p>
+                                        <div class="itemImg">
+                                            <img src="./images/${data[i]['itemImg']}">
+                                        </div>
+                                    </label>`)
+                }
+              
+            })
+        })
+
         $(document).on('click', '.submit', function() {
             $.ajax({
                 type: 'POST',
@@ -174,7 +245,7 @@ $(document).ready(function(){
             })
                 
         });
-});    
+
 
     </script>
 
