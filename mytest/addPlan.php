@@ -96,6 +96,11 @@ require_once('./db.inc.php');
                                             <input type="radio" class="form-check-input" name="place"
                                                 value="精選商品頭版"<?php if( isset($_SESSION["place"])&& $_SESSION["place"] == '精選商品頭版'){echo 'checked';} ?>>精選商品頭版
                                         </label>
+                                        <br>
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="place" value="商品首頁頭版"
+                                                >關鍵字廣告
+                                        </label>
                                     </div>
                                     <h3>選擇方案</h3>
                                     <div style="margin-left: 23px;">
@@ -113,7 +118,7 @@ require_once('./db.inc.php');
                                         <h3>預算設定</h3>
                                         <div style="margin-left: 23px;">
                                             <label>請輸入預算上限: 
-                                                <input type="number" name="cost" value="<?php if( isset($_SESSION["cost"]) && $_SESSION["cost"] !== '0'){echo $_SESSION["cost"];}else{echo '0';} ?>">
+                                                <input type="number" name="cost" value="<?php if( isset($_SESSION["cost"]) && $_SESSION["cost"] !== '0'){echo $_SESSION["cost"];}else{echo '0';} ?>"> 元
                                             </label>
                                         </div>
                                     </div>
@@ -132,6 +137,50 @@ require_once('./db.inc.php');
                                     <h3>此廣告名稱</h3>
                                     <div style="margin-left: 23px;">
                                     <label>設定名稱為: <input type="text" name="name" value="<?php if( isset($_SESSION["name"])){echo $_SESSION["name"];} ?>"></label>
+                                    </div>
+                                    <!-- 新增 -->
+                                    <h3>設定廣告投放對象</h3>
+                                    <div style="margin-left: 23px;">
+                                    <label><input type="radio" class="form-check-input"value="">所有人</label>
+                                    <br>
+                                    <label><input type="radio" class="form-check-input"value="">再行銷</label>
+                                    <br>
+                                    <label>
+                                    <input type="checkbox" class="form-check-input"value="">曾經購買過我的商品
+                                    </label>
+                                    <br>
+                                    <label>
+                                    <input type="checkbox" class="form-check-input"value="">曾經瀏覽過我的商品
+                                    </label>
+                                    <br>
+                                    <label>
+                                    <input type="checkbox" class="form-check-input"value="">曾經瀏覽過 <select>
+                                        <option value ="">耳機</option>
+                                        <option value ="">手機</option>
+                                        <option value ="">周邊產品</option>
+                                    </select> 類別的商品
+                                    </label>
+                                    <br>
+                                    <label>
+                                    <input type="checkbox" class="form-check-input"value="">
+                                    <select>
+                                        <option value ="">耳機</option>
+                                        <option value ="">手機</option>
+                                        <option value ="">周邊產品</option>
+                                    </select> 類別的商品，放在購物車 尚未結帳
+                                    </label>
+                                    <br>
+                                    <label><input type="checkbox" class="form-check-input"value="">
+                                    搜尋過以下關鍵字</label>
+                                    <br>
+                                    <label><input type="checkbox" class="form-check-input"value="">
+                                    A</label>
+                                    <br>
+                                    <label><input type="checkbox" class="form-check-input"value="">
+                                    B</label>
+                                    <br>
+                                    <label><input type="checkbox" class="form-check-input"value="">
+                                    C</label>
                                     </div>
                                     <br>
                                     <input type="submit" class="btn btn-w-m btn-success" value="下一步"/>

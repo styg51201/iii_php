@@ -107,6 +107,12 @@
                                         <label>內文: <input type="text" name="content" value="" maxlength="40" /></label>
                                     </div>
                                     <br>
+                                    <h3>設定連結
+                                    </h3>
+                                    <div style="margin-left: 23px;">
+                                        <label>連結到 <input type="text" name="content" value="" maxlength="40" /></label>
+                                    </div>
+                                    <br>
                                     <div>
                                         <a href="./addPlan.php" class="btn btn-w-m btn-primary">上一步</a>
                                         <button class="btn btn-w-m btn-success submit">確認</button>
@@ -174,7 +180,7 @@
             $(document).on('click', '.submit', function() {
 
                 let fileData = $('#filed').prop('files')[0];//取得上傳檔案的屬性
-                // console.log(fileData);
+                console.log(fileData);
 
                 //沒上傳圖片的提示
                 if(!fileData){
