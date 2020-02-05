@@ -110,7 +110,12 @@
                                     <h3>設定連結
                                     </h3>
                                     <div style="margin-left: 23px;">
-                                        <label>連結到 <input type="text" name="content" value="" maxlength="40" /></label>
+                                        <label>連結到 
+                                        <select>
+                                            <option>所有商品</option>
+                                            <option>促銷名稱 123</option>
+                                            <option>促銷名稱 abc</option>
+                                        </select></label>
                                     </div>
                                     <br>
                                     <div>
