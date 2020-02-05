@@ -24,7 +24,7 @@ if( count($_POST) == 7){
 
 
 
-    header("Refresh: 0; url=./new.php");
+    header("Refresh: 0; url=./addAd.php");
     // echo '<pre>';
     // print_r($_SESSION);
     // echo '</pre>';
