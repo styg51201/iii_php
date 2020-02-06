@@ -1,6 +1,6 @@
 <?php
-require_once('./checkSession.php');
-require_once('./db.inc.php');
+require_once './checkSession.php';
+require_once './db.inc.php';
 
 ?>
 
@@ -48,10 +48,6 @@ require_once('./db.inc.php');
             color:red;
         }
     </style>
-        <!-- 引入 jQuery 的函式庫 -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
 
 </head>
 
@@ -59,11 +55,11 @@ require_once('./db.inc.php');
 
     <div id="wrapper">
         <!-- 左側選單 -->
-        <?php require_once('./left-nav.php'); ?>
+        <?php require_once './left-nav.php';?>
         <!-- Body -->
         <div id="page-wrapper" class="gray-bg">
             <!-- 上側選單 -->
-        <?php require_once('./top-nav.php'); ?>
+        <?php require_once './top-nav.php';?>
             <!-- 標題 -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-9">
@@ -99,7 +95,7 @@ require_once('./db.inc.php');
                                 <div class="d-flex justify-content-between">
                                 <button class="btn btn-w-m toggle" style="background:#D0D0D0">取消</button>
                                 <button class="btn btn-w-m  btn-success submit">確認</button>
-                                </div>                              
+                                </div>
                             </div>
                         </div>
                         <div class="ibox ">
@@ -107,18 +103,18 @@ require_once('./db.inc.php');
                                     <div class="ibox-title">
                                         <h5>所有廣告活動</h5>
                                     </div>
-                                
+
                                     <div class="ibox-content">
-                                    <?php 
-                                        $sql = 'SELECT *
-                                                FROM `plan` 
+                                    <?php
+$sql = 'SELECT *
+                                                FROM `plan`
                                                 WHERE `username` = ?';
-                                        $arrParam = [$_SESSION['username']];
-                                        $stmt=$pdo->prepare($sql);
-                                        $stmt->execute($arrParam);
-                                        if($stmt->rowCount() > 0){ 
-                                    ?>  
-                                         
+$arrParam = [$_SESSION['username']];
+$stmt = $pdo->prepare($sql);
+$stmt->execute($arrParam);
+if ($stmt->rowCount() > 0) {
+    ?>
+
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -144,29 +140,29 @@ require_once('./db.inc.php');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <?php 
-                                                $arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                                    
-                                                for($i=0; $i < count($arr); $i++){ 
-                                                // echo '<pre>';
-                                                // print_r($arr);
-                                                // print_r(count($arr));
-                                                // echo '</pre>';
-                                                    
-                                            ?>
-                                            
-                                                <tr>
+                                            <?php
+$arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    for ($i = 0; $i < count($arr); $i++) {
+        // echo '<pre>';
+        // print_r($arr);
+        // print_r(count($arr));
+        // echo '</pre>';
+
+        ?>
+
+                                                <tr class="planRow">
                                                     <td ><?php echo $arr[$i]['id'] ?></td>
                                                     <td><?php echo $arr[$i]['name'] ?></td>
                                                     <td><?php echo $arr[$i]['target'] ?></td>
                                                     <td><?php echo $arr[$i]['type'] ?></td>
                                                     <td><?php echo $arr[$i]['place'] ?></td>
                                                     <td>
-                                                        <?php if($arr[$i]['cost']){
-                                                            echo $arr[$i]['cost'].'元';
-                                                        }else{
-                                                            echo '-';
-                                                        } ?>
+                                                        <?php if ($arr[$i]['cost']) {
+            echo $arr[$i]['cost'] . '元';
+        } else {
+            echo '-';
+        }?>
 
                                                     </td>
                                                     <td><?php echo $arr[$i]['click'] ?></td>
@@ -180,20 +176,20 @@ require_once('./db.inc.php');
                                                     <td><?php echo $arr[$i]['dueTime'] ?></td>
                                                     <td><a class="btn btn-sm btn-primary" href="editPlan.php?editId=<?php echo $arr[$i]['id'] ?>">修改</a></td>
                                                     <td><button class="btn btn-sm btn-danger deletePlan"><span style="display:none"><?php echo $arr[$i]['id'] ?></span>刪除</button></td>
-                                                    <?php 
-                                                        $sqlAd = 'SELECT *
+                                                    <?php
+$sqlAd = 'SELECT *
                                                         FROM `ad`
                                                         WHERE `PlanId` = ?';
-                                                         $arrAd = [$arr[$i]['id']];
-                                                        $stmtAd=$pdo->prepare($sqlAd);
-                                                        $stmtAd->execute($arrAd);
-                                                        if($stmtAd->rowCount() > 0){
-                                                            $brr = $stmtAd->fetchAll(PDO::FETCH_ASSOC);
-                                                            for($k=0; $k < count($brr); $k++){ 
-                                                    ?>
+        $arrAd = [$arr[$i]['id']];
+        $stmtAd = $pdo->prepare($sqlAd);
+        $stmtAd->execute($arrAd);
+        if ($stmtAd->rowCount() > 0) {
+            $brr = $stmtAd->fetchAll(PDO::FETCH_ASSOC);
+            for ($k = 0; $k < count($brr); $k++) {
+                ?>
                                                     <td><button class="fa fa-angle-double-down btn btn-circle"  data-toggle="collapse" data-target="#collapse<?php echo $brr[$k]['adId'] ?>" aria-expanded="false" aria-controls="collapse<?php echo $brr[$k]['adId'] ?>">
                                                             </button></td>
-                                                    <tr  class="collapse" id="collapse<?php echo $brr[$k]['adId'] ?>">
+                                                    <tr  class="collapse adRow" id="collapse<?php echo $brr[$k]['adId'] ?>">
                                                     <th style="vertical-align:middle">圖片名稱:</th>
                                                     <td style="vertical-align:middle"><?php echo $brr[$k]['adName'] ?></td>
                                                     <th style="vertical-align:middle">圖片標題:</th>
@@ -214,15 +210,17 @@ require_once('./db.inc.php');
                                                     <td></td>
                                                     </tr>
                                                     <?php
-                                                            }      
-                                                        }else{ ?>
+}
+        } else {?>
                                                         <td>查無資料</td>
-                                                    <?php } ?>
-                                                </tr> 
-                                        <?php   } ?>
+                                                    <?php }?>
+                                                </tr>
+                                        <?php }?>
                                             </tbody>
                                         </table>
-                                    <?php }else{echo '<br>尚無資料';}?>
+                                    <?php } else {?>
+                                    <h2>查無資料<h2>
+                                    <?php }?>
                                     </div>
                                 </div>
                             <div>
@@ -236,6 +234,8 @@ require_once('./db.inc.php');
     </div>
     </div>
 
+    <!-- 引入 jQuery 的函式庫 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
@@ -258,14 +258,13 @@ require_once('./db.inc.php');
     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <script>
-        $(document).ready(function(){
 
             //狀態是上架 就顯示紅色
             let PlanStatus = document.querySelectorAll('.planStatus');
             for(i=0; i < PlanStatus.length; i++){
                 if(PlanStatus[i].innerHTML == "上架"){
                     PlanStatus[i].className += ' red';
-                } 
+                }
             }
 
             let statusId;
@@ -273,7 +272,7 @@ require_once('./db.inc.php');
             let editAjax
             //狀態設定
             $(document).on('click', 'button.editStatus', function(){
-    
+
                 statusId = $(this).children('span').html();
                 status = $(this).parent().prev().html();
                 editStatusAjax = $(this).parent().prev();
@@ -319,7 +318,7 @@ require_once('./db.inc.php');
 
                         }
                         editStatusAjax.html(updateStatus);
-                         
+
                     }else{
                         $('.alertBox').slideToggle();
                     };
@@ -338,7 +337,7 @@ require_once('./db.inc.php');
                     confirmButtonText: "刪除",
                     cancelButtonText: "取消",
                     closeOnConfirm: false
-                    }, 
+                    },
                     function () {
                         $.ajax({
                             type: 'POST',
@@ -349,30 +348,31 @@ require_once('./db.inc.php');
                         })
                         .done(function(data) {
                             if(data){
-                                $(document).on('click', '.confirm', function() { 
+                                $(document).on('click', '.confirm', function() {
                                     setTimeout("location.reload(true)",100);
                                 })
                                 swal("刪除成功","","success");
-                           
+
 
                             }else{
-                               $(document).on('click', '.confirm', function() { 
+                               $(document).on('click', '.confirm', function() {
                                     setTimeout("location.reload(true)",100);
                                 })
                                 swal("刪除失敗","","error");
                             };
                         })
-                        
+
                     }
                 );
-                
+
             })
             //刪除廣告活動
             $(document).on('click', '.deletePlan', function() {
-                
+
                 let deletePlanId = $(this).children('span').html();
                 let deletePlanTr = $(this).parent().parent();
-        
+                // let deleteAdTr = $(this).parent().parent().find('.adRow');
+
                 swal({
                     title: "確定刪除廣告活動?",
                     text: "",
@@ -382,7 +382,7 @@ require_once('./db.inc.php');
                     confirmButtonText: "刪除",
                     cancelButtonText: "取消",
                     closeOnConfirm: false
-                    }, 
+                    },
                     function () {
                         $.ajax({
                             type: 'POST',
@@ -393,26 +393,29 @@ require_once('./db.inc.php');
                         })
                         .done(function(data) {
                             if(data){
-                                // $(document).on('click', '.confirm', function() { 
+                                // $(document).on('click', '.confirm', function() {
                                 //     setTimeout("location.reload(true)",100);
                                 // })
                                 deletePlanTr.remove();
+                                // deleteAdTr.remove();
+                                if($('.planRow').length ==0){
+                                    $('.ibox-content').html('<h2>查無資料<h2>')
+                                }
                                 swal("刪除成功", "", "success",);
-                                
-                                
+
+
 
                             }else{
-                                $(document).on('click', '.confirm', function() { 
+                                $(document).on('click', '.confirm', function() {
                                     setTimeout("location.reload(true)",100);
                                 })
                                 swal("刪除失敗","","error");
                             };
                         })
-                
+
                     }
                 )
             })
-        });
         </script>
 
 

@@ -41,13 +41,13 @@
             right: 15%;
             bottom: 26px;
             left: 15%;
-           
+
         }
         .title{
             margin:0px 0 16px 0;
         }
-       
-    </style>    
+
+    </style>
 
 </head>
 
@@ -55,13 +55,13 @@
 
     <div id="wrapper">
         <!-- 左側選單 -->
-        <?php require_once('./left-nav.php'); ?>
-        
+        <?php require_once './left-nav.php';?>
+
         <!-- Body -->
         <div id="page-wrapper" class="gray-bg">
             <!-- 上側選單 -->
-        <?php require_once('./top-nav.php'); ?>
-           
+        <?php require_once './top-nav.php';?>
+
             <!-- 標題 -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-9">
@@ -110,7 +110,7 @@
                                     <h3>設定連結
                                     </h3>
                                     <div style="margin-left: 23px;">
-                                        <label>連結到 
+                                        <label>連結到
                                         <select>
                                             <option>所有商品</option>
                                             <option>促銷名稱 123</option>
@@ -138,7 +138,7 @@
         </div>
     </div>
         <!-- Footer -->
-        
+
 
     </div>
     </div>
@@ -159,9 +159,9 @@
     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <script>
-        $(document).ready(function(){
-            let show = document.querySelector('.show'); 
-            let mainText = document.querySelector('.mainText'); 
+
+            let show = document.querySelector('.show');
+            let mainText = document.querySelector('.mainText');
             let titleText = document.querySelector('.title');
             let contentText = document.querySelector('.content');
             let title , content ;
@@ -209,23 +209,23 @@
                         contentType: false, //這兩個都必須要加
                         processData: false,
                         //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
-                        data: formData, 
-                    
+                        data: formData,
+
                     })
                     .done(function(data) {
                         console.log(data);
                         if(data){
-                            $(document).on('click', '.confirm', function() { 
+                            $(document).on('click', '.confirm', function() {
                                 setTimeout("location='./setting.php'",100);
                             })
                             swal("新增成功","","success");
-                            
+
                         }else{
-                            $(document).on('click', '.confirm', function() { 
+                            $(document).on('click', '.confirm', function() {
                                 setTimeout("location='./addPlan.php'",100);
                             })
                             swal("新增失敗","","error");
-                        
+
                         };
                     })
                 }
@@ -250,7 +250,7 @@
                 show.style.display='block';
                 }
             })
-        })
+
     </script>
 
 </body>

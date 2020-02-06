@@ -1,5 +1,5 @@
 <?php
-require_once('./db.inc.php');
+require_once './db.inc.php';
 session_start();
 $sqlOn = "SELECT  *
 FROM `plan` INNER JOIN `ad`
@@ -16,28 +16,30 @@ $stmtOn = $pdo->query($sqlOn);
 // echo '<pre>';
 // print_r($sqlOn);
 //  echo '</pre>';
-$bannerUrl=[];
-$bannerId=[];
-$bannerTitle=[];
-$bannerContent=[];
+$bannerUrl = [];
+$bannerId = [];
+$bannerTitle = [];
+$bannerContent = [];
 
-if($stmtOn->rowCount() > 0){
+if ($stmtOn->rowCount() > 0) {
     $arrOn = $stmtOn->fetchAll(PDO::FETCH_ASSOC);
-    for($i=0;$i<count($arrOn);$i++){
-        if( $arrOn[$i]['startTime'] <= $today && $arrOn[$i]['dueTime'] >= $today ){
+    for ($i = 0; $i < count($arrOn); $i++) {
+        if ($arrOn[$i]['startTime'] <= $today && $arrOn[$i]['dueTime'] >= $today) {
             $bannerUrl[] = $arrOn[$i]['img'];
             $bannerId[] = $arrOn[$i]['id'];
             $bannerTitle[] = $arrOn[$i]['title'];
             $bannerContent[] = $arrOn[$i]['content'];
         }
-        if($arrOn[$i]['dueTime'] < $today){
+        if ($arrOn[$i]['dueTime'] < $today) {
             $sqlEdit = "UPDATE `plan` SET `status` = '下架' WHERE `id` = ?";
             $arrEdit = [$arrOn[$i]['id']];
             $stmtEdit = $pdo->prepare($sqlEdit);
             $stmtEdit->execute($arrEdit);
         }
-    };
-};
+    }
+    ;
+}
+;
 ?>
 
 <!doctype html>
@@ -49,13 +51,12 @@ if($stmtOn->rowCount() > 0){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-   
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-    <!-- 引入 jQuery 的函式庫 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
     <style>
         a {
@@ -68,7 +69,7 @@ if($stmtOn->rowCount() > 0){
             object-fit: cover;
         }
 
-       
+
 
         .list-unstyled a {
             color: white;
@@ -76,7 +77,7 @@ if($stmtOn->rowCount() > 0){
         .logout{
             cursor: pointer;
         }
-        
+
         .h4 {
             text-decoration: underline;
         }
@@ -97,42 +98,12 @@ if($stmtOn->rowCount() > 0){
             }
         }
     </style>
-
+    <!-- 擺前面幻燈片才能運作 -->
     <!-- 引入 jQuery 的函式庫 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
-    <script>
-        $(document).ready(function(){
 
-            $(document).on('click','.logout',function(){
-                $.ajax({
-                    type: 'POST',
-                    url: './logout.php',
-                    data: {
-                        logout:'1'
-                        }
-                })
-                .done(function(data){
-                    if(data){
-                        $(document).on('click', '.confirm', function() { 
-                            setTimeout("location='./index.php'",100);
-                        })
-                        swal("登出成功","","success");
-                    
-
-                    }else{
-                        $(document).on('click', '.confirm', function() { 
-                            setTimeout("location='./index.php'",100);
-                        })
-                        swal("登出失敗","","error");
-                    };
-                })
-            })
-        })
-    </script>
 </head>
 
 <body>
@@ -179,15 +150,15 @@ if($stmtOn->rowCount() > 0){
                 </div>
                 <nav class="navbar navbar-dark">
                     <a href="./index.php" class="navbar-brand text-white">Home</a>
-                    <?php 
-                        
-                        if(isset($_SESSION['username'])){
-                        echo '<a class="navbar-brand text-white" href="./setting.php">版面設定</a> 
+                    <?php
+
+if (isset($_SESSION['username'])) {
+    echo '<a class="navbar-brand text-white" href="./setting.php">版面設定</a>
                                 <a class="navbar-brand text-white logout">登出</a>';
-                        }else{
-                        echo '<a class="navbar-brand text-white" href="./login.php">登入</a>';
-                        }
-                    ?>
+} else {
+    echo '<a class="navbar-brand text-white" href="./login.php">登入</a>';
+}
+?>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -200,29 +171,29 @@ if($stmtOn->rowCount() > 0){
     <!-- main -->
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-        <?php for($i=0;$i<count($bannerId);$i++){
-                // $k = $i+2;
-                echo '<li data-target="#carouselExampleCaptions" data-slide-to="'.$i.'"></li>';
-            } ?>
+        <?php for ($i = 0; $i < count($bannerId); $i++) {
+    // $k = $i+2;
+    echo '<li data-target="#carouselExampleCaptions" data-slide-to="' . $i . '"></li>';
+}?>
             <li class="dfFirst" data-target="#carouselExampleCaptions"></li>
             <li class="dfSecond" data-target="#carouselExampleCaptions"></li>
-            
+
         </ol>
         <div class="carousel-inner">
             <!-- 以下 -->
-            <?php for($i=0;$i<count($bannerId);$i++){
-                echo '<div class="carousel-item">
+            <?php for ($i = 0; $i < count($bannerId); $i++) {
+    echo '<div class="carousel-item">
                         <a href="./index.php" class="bannerA">
-                        <span style="display:none">'.$bannerId[$i].'</span>
-                            <img src="./images/'.$bannerUrl[$i].'" class="d-block w-100"
+                        <span style="display:none">' . $bannerId[$i] . '</span>
+                            <img src="./images/' . $bannerUrl[$i] . '" class="d-block w-100"
                                 alt="...">
                             <div class="carousel-caption">
-                                <h3>'.$bannerTitle[$i].'</h3>
-                                <p>'.$bannerContent[$i].'</p>
+                                <h3>' . $bannerTitle[$i] . '</h3>
+                                <p>' . $bannerContent[$i] . '</p>
                             </div>
                         </a>
                     </div>';
-                } ?>
+}?>
             <!-- 第一張 -->
             <div class="carousel-item">
                 <a href="./index.php">
@@ -244,10 +215,10 @@ if($stmtOn->rowCount() > 0){
                         <h3>Second slide label</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
-                </a>    
+                </a>
             </div>
             <!-- 之後的圖片 -->
-            
+
             <!-- 以上 -->
         </div>
         <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
@@ -439,17 +410,23 @@ if($stmtOn->rowCount() > 0){
         <p><a href="">back to top</a></p>
 
     </div>
-        <script src="js/bootstrap.js"></script>
+
+    <script src="js/bootstrap.js"></script>
+
+     <!-- Sweet alert -->
+     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+
         <script>
-            $(document).ready(function(){
+            // $(document).ready(function(){
 
                 //設定幻燈片的第一張
                 let firstButton = $('.carousel-indicators').find("li").first();
                 firstButton.addClass('active');
-                
+
                 let liButton = $('.carousel-indicators').children();
 
-                if(liButton.length){ 
+                if(liButton.length){
                     let a =liButton.length;
                     $('.dfFirst').attr("data-slide-to",a);
                     $('.dfSecond').attr("data-slide-to",a+1);
@@ -458,10 +435,10 @@ if($stmtOn->rowCount() > 0){
                     $('.dfFirst').attr("data-slide-to",0);
                     $('.dfSecond').attr("data-slide-to",1);
                 }
-       
+
                 let firstImg = $('.carousel-inner').find("div").first();
                 firstImg.addClass('active');
-        
+
                 //計算點擊數
                 $(document).on('click','.bannerA',function(){
                     bannerId = $(this).children('span').html();
@@ -474,7 +451,35 @@ if($stmtOn->rowCount() > 0){
                     })
 
                 })
+
+            $(document).on('click','.logout',function(){
+                $.ajax({
+                    type: 'POST',
+                    url: './logout.php',
+                    data: {
+                        logout:'1'
+                        }
+                })
+                .done(function(data){
+                    if(data){
+                        $(document).on('click', '.confirm', function() {
+                            setTimeout("location='./index.php'",100);
+                        })
+                        swal("登出成功","","success");
+
+
+                    }else{
+                        $(document).on('click', '.confirm', function() {
+                            setTimeout("location='./index.php'",100);
+                        })
+                        swal("登出失敗","","error");
+                    };
+                })
             })
+
+            // })
+
+
         </script>
 </body>
 

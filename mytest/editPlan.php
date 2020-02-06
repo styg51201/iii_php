@@ -1,6 +1,6 @@
 <?php
-require_once('./checkSession.php');
-require_once('./db.inc.php');
+require_once './checkSession.php';
+require_once './db.inc.php';
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ require_once('./db.inc.php');
 
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-    
+
     <style>
         .span{
             padding:0 60px
@@ -30,73 +30,19 @@ require_once('./db.inc.php');
             display:block;
         }
     </style>
-
-        <!-- 引入 jQuery 的函式庫 -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        
-
-        <script>
-        $(document).ready(function(){
-
-            $(document).on('click', '.submit', function() {
-                $.ajax({
-                    type: 'POST',
-                    url: './updateEditPlan.php',
-                    data: {
-                            name:$('input[name=name]').val(),
-                            target:$('input[name=target]').val(),
-                            type:$('input[name=type]').val(),
-                            place:$('input[name=place]').val(),
-                            cost:$('input[name=cost]').val(),
-                            startTime:$('input[name=startTime]').val(),
-                            dueTime:$('input[name=dueTime]').val(),
-                            id:$('input[name=id]').val()
-                    }
-                })
-                .done(function(data) {
-                    if(data){
-                        $(document).on('click', '.confirm', function() { 
-                            setTimeout("location='./setting.php'",100);
-                        })
-                        swal("修改成功", "", "success",);
-                        
-            
-                    }else{
-                        $(document).on('click', '.confirm', function() { 
-                            setTimeout("location='./setting.php'",100);
-                        })
-                        swal("修改失敗", "", "error",);
-              
-                    };
-                })
-                
-            });
-
-            // $(document).on('click', '.confirm', function() {
-            //     // swal.close();
-            //     setTimeout("location='./setting.php'",100);
-            //     // $(location).attr('href','./setting.php');
-
-            // })
-
-
-        })
-
-        </script>
-
 </head>
 
 <body>
 
     <div id="wrapper">
         <!-- 左側選單 -->
-        <?php require_once('./left-nav.php'); ?>
-        
+        <?php require_once './left-nav.php';?>
+
         <!-- Body -->
         <div id="page-wrapper" class="gray-bg">
             <!-- 上側選單 -->
-        <?php require_once('./top-nav.php'); ?>
-            
+        <?php require_once './top-nav.php';?>
+
             <!-- 標題 -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-9">
@@ -120,29 +66,29 @@ require_once('./db.inc.php');
                     <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-content">
-                                
+
                                 <table class="table">
                                     <tbody>
-                                    <?php 
+                                    <?php
 
-                                        $sql = 'SELECT *
-                                        FROM `plan` 
+$sql = 'SELECT *
+                                        FROM `plan`
                                         WHERE `plan`.`id` = ? AND `username` = ?';
 
-                                        $arrParam = [$_GET['editId'],
-                                                    $_SESSION['username']
-                                                ];
+$arrParam = [$_GET['editId'],
+    $_SESSION['username'],
+];
 
-                                        // echo '<pre>';
-                                        // print_r($arrParam);
-                                        // echo '</pre>';
+// echo '<pre>';
+// print_r($arrParam);
+// echo '</pre>';
 
-                                        $stmt = $pdo->prepare($sql);
-                                        $stmt->execute($arrParam);
+$stmt = $pdo->prepare($sql);
+$stmt->execute($arrParam);
 
-                                        if( $stmt->rowCount() > 0){
-                                            $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
-                                    ?>
+if ($stmt->rowCount() > 0) {
+    $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+    ?>
                                     <tr>
                                         <td>流水號
                                         <span class="span">
@@ -179,7 +125,7 @@ require_once('./db.inc.php');
                                         </span>
                                         </td>
                                     </tr>
-                                    <?php if( $arr['cost']){ ?>
+                                    <?php if ($arr['cost']) {?>
                                     <tr>
                                         <td>預算
                                             <span class="span">
@@ -187,9 +133,10 @@ require_once('./db.inc.php');
                                         </span>
                                         </td>
                                     </tr>
-                                    <?php }else{ ?>
+                                    <?php } else {?>
                                     <input type="hidden" name="cost" value="<?php echo $arr['cost']; ?>" maxlength="20" />
-                                    <?php }; ?>
+                                    <?php }
+    ;?>
                                     <tr>
                                         <td>狀態
                                             <span class="span">
@@ -212,9 +159,9 @@ require_once('./db.inc.php');
                                         </span>
                                         </td>
                                     </tr>
-                                    <?php } ?>
+                                    <?php }?>
                                 </tbody>
-                                <input type="hidden" name="editId" value="<?php echo (int)$_GET['editId']; ?>">
+                                <input type="hidden" name="editId" value="<?php echo (int) $_GET['editId']; ?>">
                             </table>
                             <br>
                             <button class="btn btn-w-m btn-success submit">修改</button>
@@ -243,6 +190,57 @@ require_once('./db.inc.php');
 
     <!-- Sweet alert -->
     <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+      <!-- 引入 jQuery 的函式庫 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <script>
+
+            $(document).on('click', '.submit', function() {
+                $.ajax({
+                    type: 'POST',
+                    url: './updateEditPlan.php',
+                    data: {
+                            name:$('input[name=name]').val(),
+                            target:$('input[name=target]').val(),
+                            type:$('input[name=type]').val(),
+                            place:$('input[name=place]').val(),
+                            cost:$('input[name=cost]').val(),
+                            startTime:$('input[name=startTime]').val(),
+                            dueTime:$('input[name=dueTime]').val(),
+                            id:$('input[name=id]').val()
+                    }
+                })
+                .done(function(data) {
+                    if(data){
+                        $(document).on('click', '.confirm', function() {
+                            setTimeout("location='./setting.php'",100);
+                        })
+                        swal("修改成功", "", "success",);
+
+
+                    }else{
+                        $(document).on('click', '.confirm', function() {
+                            setTimeout("location='./setting.php'",100);
+                        })
+                        swal("修改失敗", "", "error",);
+
+                    };
+                })
+
+            });
+
+            // $(document).on('click', '.confirm', function() {
+            //     // swal.close();
+            //     setTimeout("location='./setting.php'",100);
+            //     // $(location).attr('href','./setting.php');
+
+            // })
+
+
+        </script>
+
 
 </body>
 

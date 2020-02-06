@@ -1,6 +1,6 @@
 <?php
-require_once('./checkSession.php');
-require_once('./db.inc.php');
+require_once './checkSession.php';
+require_once './db.inc.php';
 
 ?>
 
@@ -47,9 +47,6 @@ require_once('./db.inc.php');
             margin:0px 0 16px 0;
         }
     </style>
-     <!-- 引入 jQuery 的函式庫 -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 
 </head>
 
@@ -57,13 +54,13 @@ require_once('./db.inc.php');
 
     <div id="wrapper">
         <!-- 左側選單 -->
-        <?php require_once('./left-nav.php'); ?>
-        
+        <?php require_once './left-nav.php';?>
+
         <!-- Body -->
         <div id="page-wrapper" class="gray-bg">
             <!-- 上側選單 -->
-        <?php require_once('./top-nav.php'); ?>
-            
+        <?php require_once './top-nav.php';?>
+
             <!-- 標題 -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-9">
@@ -90,28 +87,28 @@ require_once('./db.inc.php');
                                 <h5>詳細資料</h5>
                             </div>
                             <div class="ibox-content d-flex justify-content-around">
-                                
-                                        <?php 
 
-                                        $sql = 'SELECT *
-                                        FROM `ad` 
+                                        <?php
+
+$sql = 'SELECT *
+                                        FROM `ad`
                                         WHERE `adId` = ?';
 
-                                        $arrParam = [$_GET['editId'],
-                                                ];
+$arrParam = [$_GET['editId'],
+];
 
-                                        // echo '<pre>';
-                                        // print_r($arrParam);
-                                        // echo '</pre>';
+// echo '<pre>';
+// print_r($arrParam);
+// echo '</pre>';
 
-                                        $stmt = $pdo->prepare($sql);
-                                        $stmt->execute($arrParam);
+$stmt = $pdo->prepare($sql);
+$stmt->execute($arrParam);
 
-                                        if( $stmt->rowCount() > 0){
-                                            $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
-                                    ?>
-                                <div class="">    
-                                     
+if ($stmt->rowCount() > 0) {
+    $arr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+    ?>
+                                <div class="">
+
                                     <input type="hidden" name="adId" value="<?php echo $arr['adId']; ?>">
 
                                     <label>圖片名稱
@@ -120,7 +117,7 @@ require_once('./db.inc.php');
                                     <br><br>
                                     <label>上傳檔案
                                         <input type="file" name="img" id="filed"/>
-                                    </label> 
+                                    </label>
                                     <br><br>
                                     <label>圖片標題
                                         <input type="text" name="title" value="<?php echo $arr['title']; ?>" maxlength="20" />
@@ -130,10 +127,10 @@ require_once('./db.inc.php');
                                         <input type="text" name="content" value="<?php echo $arr['content']; ?>" maxlength="40" />
                                     </label>
 
-                                    <?php } ?>
-                                    
-                                    <input type="hidden" name="editId" value="<?php echo (int)$_GET['editId']; ?>">
-                                    
+                                    <?php }?>
+
+                                    <input type="hidden" name="editId" value="<?php echo (int) $_GET['editId']; ?>">
+
                                     <br>
                                     <br>
                                     <button class="submit btn btn-w-m btn-success">修改</button>
@@ -156,6 +153,8 @@ require_once('./db.inc.php');
     </div>
     </div>
 
+    <!-- 引入 jQuery 的函式庫 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
@@ -173,9 +172,7 @@ require_once('./db.inc.php');
 
 <script>
 
-    $(document).ready(function(){
-
-        let mainText = document.querySelector('.mainText'); 
+        let mainText = document.querySelector('.mainText');
         let titleText = document.querySelector('.title');
         let contentText = document.querySelector('.content');
         let title =  $('input[name=title]').val();
@@ -227,28 +224,28 @@ require_once('./db.inc.php');
                 contentType: false, //這兩個都必須要加
                 processData: false,
                 //data只能指定單一物件 如果要傳送其他的資料需要用append()加到裡面
-                data: formData, 
+                data: formData,
                 // {
                 //         Name:$('input[name=Name]').val(),
                 //         Id:$('input[name=Id]').val(),
                 //         Img:$('input[name=Img]').val()
                 // }
-                
+
             })
             .done(function(data) {
                 if(data){
-                    $(document).on('click', '.confirm', function() { 
+                    $(document).on('click', '.confirm', function() {
                         setTimeout("location='./setting.php'",100);
                     })
                     swal("修改成功", "", "success",);
-                    
+
 
                 }else{
-                    $(document).on('click', '.confirm', function() { 
+                    $(document).on('click', '.confirm', function() {
                         setTimeout("location='./setting.php'",100);
                     })
                     swal("修改失敗", "", "error",);
-                    
+
                 };
             })
             .fail(function(){
@@ -258,13 +255,6 @@ require_once('./db.inc.php');
         })
 
 
-        })
-
-</script>
-
-
-<script>
-        
     $('#filed').change(function(){
     //獲取input file的files檔案陣列;
     //$('#filed')獲取的是jQuery物件，.get(0)轉為原生物件;
