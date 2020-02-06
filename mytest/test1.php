@@ -158,6 +158,8 @@ require_once './db.inc.php';
             .done(function(data){
                 
                 allData = JSON.parse(data);
+ 
+                // console.log(allData)
                 $('.ibox-content').append(`<table class="table">
                                             <thead>
                                                 <tr>
@@ -184,7 +186,7 @@ require_once './db.inc.php';
                                             </thead>
                                             <tbody></tbody>
                                             </table>`)
-                // data.forEach(function(item){
+                //                             allData.forEach(function(item){
                 //     $('tbody').append(` <tr class="planRow" data-planId="${item['planId']}">
                 //                             <td>${item['planId']}</td>
                 //                             <td>${item['planName']}</td>
@@ -225,34 +227,39 @@ require_once './db.inc.php';
 
         }
         app();
+        // $('.adRow').empty()
+        console.log(allData)
+
         allData.forEach(function(item){
-                    $('tbody').append(` <tr class="planRow" data-planId="${item['planId']}">
-                                            <td>${item['planId']}</td>
-                                            <td>${item['planName']}</td>
-                                            <td>${item['planTarget']}</td>
-                                            <td>${item['planType']}</td>
-                                            <td>${item['planPlace']}</td>
-                                            <td>${item['planCost']}</td>
-                                            <td>${item['planClick']}</td>
-                                            <td>${item['planStatus']}</td>
+      
+
+                    $('tbody').append(` <tr class="planRow" data-planId="${allData['planId']}">
+                                            <td>${allData['planId']}</td>
+                                            <td>${allData['planName']}</td>
+                                            <td>${allData['planTarget']}</td>
+                                            <td>${allData['planType']}</td>
+                                            <td>${allData['planPlace']}</td>
+                                            <td>${allData['planCost']}</td>
+                                            <td>${allData['planClick']}</td>
+                                            <td>${allData['planStatus']}</td>
                                             <td><button class="btn btn-sm btn-outline btn-primary toggle editStatus">設定</button></td>
-                                            <td>${item['planStartTime']}</td>
-                                            <td>${item['planDueTime']}</td>
-                                            <td><a class="btn btn-sm btn-primary" href="editPlan.php?editId="${item['planId']}">修改</a></td>
+                                            <td>${allData['planStartTime']}</td>
+                                            <td>${allData['planDueTime']}</td>
+                                            <td><a class="btn btn-sm btn-primary" href="editPlan.php?editId="${allData['planId']}">修改</a></td>
                                             <td><button class="btn btn-sm btn-danger deletePlan">刪除</button></td>
-                                            <td><button class="fa fa-angle-double-down btn btn-circle adInfo" data-target="adOpen${item['adId']}"></button></td>
-                                            <tr class="coll adRow" id="adOpen${item['adId']}" data-adId="${item['adId']}">
+                                            <td><button class="fa fa-angle-double-down btn btn-circle adInfo" data-target="adOpen${allData['adId']}"></button></td>
+                                            <tr class="coll adRow" id="adOpen${allData['adId']}" data-adId="${item['adId']}">
                                             <th style="vertical-align:middle">圖片名稱:</th>
-                                            <td style="vertical-align:middle">${item['adName']}</td>
+                                            <td style="vertical-align:middle">${allData['adName']}</td>
                                             <th style="vertical-align:middle">圖片標題:</th>
-                                            <td colspan="1" style="vertical-align:middle">${item['adTitle']}</td>
+                                            <td colspan="1" style="vertical-align:middle">${allData['adTitle']}</td>
                                             <th style="vertical-align:middle">圖片內文:</th>
-                                            <td colspan="2" style="vertical-align:middle">${item['adContent']}</td>
-                                            <td colspan="5"><img id=imgShow src="./images/${item['adImg']}"></td>
+                                            <td colspan="2" style="vertical-align:middle">${allData['adContent']}</td>
+                                            <td colspan="5"><img id=imgShow src="./images/${allData['adImg']}"></td>
                                             <td style="vertical-align:middle">
-                                                <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=${item['adId']}">圖片瀏覽</a>
+                                                <a class="btn btn-sm btn-outline btn-rounded btn-info" href="./show.php?showId=${allData['adId']}">圖片瀏覽</a>
                                                 <br>
-                                                <a style="margin:20px 0px" class="btn btn-sm btn-outline btn-rounded btn-primary" href="editAd.php?editId=${item['adId']}">圖片修改</a>
+                                                <a style="margin:20px 0px" class="btn btn-sm btn-outline btn-rounded btn-primary" href="editAd.php?editId=${allData['adId']}">圖片修改</a>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -261,7 +268,7 @@ require_once './db.inc.php';
                                         </tr>
                                             `)
                                         })
-
+                                    
         $(document).on('click','.adInfo',function(){
             let adId = $(this).data('target')
             console.log($(`#${adId}`))
