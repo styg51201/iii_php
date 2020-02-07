@@ -18,12 +18,6 @@ require_once './db.inc.php';
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- JQ UI CSS -->
-    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
-
-
-
-
     <style>
         .cost.active{
             display:none;

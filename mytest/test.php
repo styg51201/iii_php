@@ -2,12 +2,14 @@
 require_once ('./db.inc.php');
 require_once ('./checkSession.php');
 
-if (1) {
+if ($_POST['check']=='all') {
 
     $sql = 'SELECT *
             FROM `plan1`
             INNER JOIN `ad1`
             ON `plan1`.`planId` = `ad1`.`adPlanId`
+            INNER JOIN `sellgroup`
+            ON `plan1`.`planId` = `sellgroup`.`groupPlanId`
             WHERE `planUsername` = ?';
     $arrParam = [$_SESSION['username']];
     $stmt = $pdo->prepare($sql);
@@ -19,9 +21,8 @@ if (1) {
             $obj[] = ['planId' => $arr[$i]['planId'],
                 'planUsername' => $arr[$i]['planUsername'],
                 'planName' => $arr[$i]['planName'],
-                'planTarget' => $arr[$i]['planTarget'],
-                'planType' => $arr[$i]['planType'],
                 'planPlace' => $arr[$i]['planPlace'],
+                'planGroup' => $arr[$i]['planGroup'],
                 'planCost' => $arr[$i]['planCost'],
                 'planClick' => $arr[$i]['planClick'],
                 'planStatus' => $arr[$i]['planStatus'],
@@ -34,9 +35,21 @@ if (1) {
                 'adImg' => $arr[$i]['adImg'],
                 'adTitle' => $arr[$i]['adTitle'],
                 'adContent' => $arr[$i]['adContent'],
+                'adLink' => $arr[$i]['adLink'],
+                'adLinkPlace' => $arr[$i]['adLinkPlace'],
                 'adPlanId' => $arr[$i]['adPlanId'],
                 'ad_created_at' => $arr[$i]['ad_created_at'],
-                'ad_updates_at' => $arr[$i]['ad_updates_at']
+                'ad_updates_at' => $arr[$i]['ad_updates_at'],
+                'groupId' => $arr[$i]['groupId'],
+                'groupPlanId' => $arr[$i]['groupPlanId'],
+                'groupBuyItems' => $arr[$i]['groupBuyItems'],
+                'groupHistoryItems' => $arr[$i]['groupHistoryItems'],
+                'groupCollectItems' => $arr[$i]['groupCollectItems'],
+                'groupHistoryCategory' => $arr[$i]['groupHistoryCategory'],
+                'groupCollectCategory' => $arr[$i]['groupCollectCategory'],
+                'groupCartCategory' => $arr[$i]['groupCartCategory'],
+                'group_created_at' => $arr[$i]['group_created_at'],
+                'group_updates_at' => $arr[$i]['group_updates_at'],
             ];
 
         }
@@ -44,6 +57,9 @@ if (1) {
         // print_r($obj);
         // echo '</pre>';
         echo json_encode($obj);
+    }else{
+        echo false;
+
     }
 
 }

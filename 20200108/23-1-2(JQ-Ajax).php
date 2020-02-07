@@ -34,7 +34,7 @@
             $.ajax({
                 method: 'POST', // GET
                 url: "23-1-1.php", // 23-1-1.php?getMethod=1
-                dataType: 'json',  //確認回傳的是json 如果是會進入.done 若不是可以進入flase
+                dataType: 'json',  //確認回傳的是json 如果是會進入.done 若不是可以進入false
                 data: {
                     postMethod: "1"
                 }
