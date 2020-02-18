@@ -159,7 +159,7 @@ require_once './db.inc.php';
                                             <tbody></tbody>
                                             </table>`;
 
-
+        
          let app = function(){
 
             $.ajax({

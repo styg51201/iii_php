@@ -189,7 +189,7 @@ $sqlAd = 'SELECT *
                 ?>
                                                     <td><button class="fa fa-angle-double-down btn btn-circle"  data-toggle="collapse" data-target="#collapse<?php echo $brr[$k]['adId'] ?>" aria-expanded="false" aria-controls="collapse<?php echo $brr[$k]['adId'] ?>">
                                                             </button></td>
-                                                    <tr  class="collapse adRow" id="collapse<?php echo $brr[$k]['adId'] ?>">
+                                                    <tr class="collapse adRow" id="collapse<?php echo $brr[$k]['adId'] ?>">
                                                     <th style="vertical-align:middle">圖片名稱:</th>
                                                     <td style="vertical-align:middle"><?php echo $brr[$k]['adName'] ?></td>
                                                     <th style="vertical-align:middle">圖片標題:</th>

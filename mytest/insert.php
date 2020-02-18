@@ -74,10 +74,10 @@ require_once("./db.inc.php");
             $arrDeletePlan = [$planId];
             $stmtDelete = $pdo->prepare($sqlDeletePlan);
             $stmtDelete->execute($arrDeletePlan);
-            echo false;
+            echo '1';
         }
     }else {
         // header("Refresh: 3; url=./new.php");
-        echo false;
+        echo '2';
     
     }

@@ -2,7 +2,7 @@
 require_once('./checkSession.php');
 require_once('./db.inc.php');
 
-$sqlPlan = "DELETE FROM `Plan` WHERE `id` = ?";
+$sqlPlan = "DELETE FROM `plan` WHERE `id` = ?";
 $arrPlan = [(int)$_POST['deleteId']];
 
 // echo "<pre>";

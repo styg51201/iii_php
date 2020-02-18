@@ -19,6 +19,10 @@
     .steps a{
         font-size:25px;
     }
+
+    .wizard > .content > .body{
+        position: relative;
+    }
     </style>
 </head>
 
@@ -54,20 +58,51 @@
                     <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-content">
-                            <div id="example-basic">
-                            <h1>設定廣告活動</h1>
-                                <section>
-                                    <p>Try the keyboard navigation by clicking arrow left or right!</p>
-                                </section>
-                                <h1>設定廣告投放對象</h1>
-                                <section>
-                                    <p>Wonderful transition effects.</p>
-                                </section>
-                                <h1>上傳圖檔</h1>
-                                <section>
-                                    <p>The next and previous buttons help you to navigate through your content.</p>
-                                </section>
-                            </div>
+                                <form name="myForm" method="post" action="./formChk.php">
+                                    <div id="example-basic">
+                                        <h1>設定廣告活動</h1>
+                                        <section>
+                                            <h3>選擇廣告活動目標</h3>
+                                            <div style="margin-left: 23px;">
+                                                <label>
+                                                    <input type="radio" class="form-check-input" name="target" value="提升品牌知名度"
+                                                        checked>了解我的品牌（提升品牌知名度）
+                                                </label>
+                                                <br>
+                                                <label>
+                                                    <input type="radio" class="form-check-input" name="target" value="提升交易量"
+                                                        >造訪我的網頁（提升交易量）
+                                                </label>
+
+                                            </div>
+                                            <h3>版面位置</h3>
+                                            <div style="margin-left: 23px;">
+                                                <label>
+                                                    <input type="radio" class="form-check-input" name="place" value="商品首頁頭版"
+                                                        checked>商品首頁頭版
+                                                </label>
+                                                <br>
+                                                <label>
+                                                    <input type="radio" class="form-check-input" name="place"
+                                                        value="精選商品頭版">精選商品頭版
+                                                </label>
+                                                <br>
+                                                <label>
+                                                    <input type="radio" class="form-check-input" name="place" value="商品首頁頭版"
+                                                        >關鍵字廣告
+                                                </label>
+                                            </div>
+                                        </section>
+                                        <h1>設定廣告投放對象</h1>
+                                        <section>
+                                            <p>Wonderful transition effects.</p>
+                                        </section>
+                                        <h1>上傳圖檔</h1>
+                                        <section>
+                                            <p>The next and previous buttons help you to navigate through your content.</p>
+                                        </section>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
