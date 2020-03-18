@@ -8,8 +8,8 @@ if ($_POST['check']=='all') {
             FROM `plan1`
             INNER JOIN `ad1`
             ON `plan1`.`planId` = `ad1`.`adPlanId`
-            INNER JOIN `sellgroup`
-            ON `plan1`.`planId` = `sellgroup`.`groupPlanId`
+            INNER JOIN `promotion_group`
+            ON `plan1`.`planId` = `promotion_group`.`groupPlanId`
             WHERE `planUsername` = ?';
     $arrParam = [$_SESSION['username']];
     $stmt = $pdo->prepare($sql);
