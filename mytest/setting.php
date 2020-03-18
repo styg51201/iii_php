@@ -295,7 +295,7 @@ $sqlAd = 'SELECT *
             $(document).on('click', 'button.toggle', function(){
 
                 $('.alertBox').slideToggle();
-                });
+            });
 
             //狀態修改的Ajax
             $(document).on('click', '.submit', function() {

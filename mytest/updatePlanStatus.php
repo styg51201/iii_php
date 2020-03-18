@@ -11,9 +11,9 @@ if($_POST['status'] == NULL){
     $_POST['status']='審核';
 }
 
-$sql = 'UPDATE `plan`
-        SET `status` = ?
-        WHERE `id` = ? ';
+$sql = 'UPDATE `plan1`
+        SET `planStatus` = ?
+        WHERE `planId` = ? ';
            
 $arr = [$_POST['status'],
         $_POST['editId']

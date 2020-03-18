@@ -23,46 +23,7 @@ require_once './db.inc.php';
     <!-- Sweet Alert -->
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-    <style>
-        #imgShow{
-            width:100%;
-            height:130px;
-            object-fit:cover;
-        }
-        .alertBox{
-            margin:0px
-            border:2px solid #778899;
-            border-radius:30px;
-            background:#DDDDDD;
-            width:300px;
-            left:50%;
-            top:50%;
-            transform: translate(-70%,-70%);
-            display: none;
-            z-index:1;
-        }
-        .collapse>td{
-            vertical-align:middle
-        }
-        .red{
-            color:red;
-        }
-        .adRow.active{
-            display:none;
-        }
-        .groupInfo{
-            position: absolute;
-            left:45px;
-            top:0px;
-            background:#ffffff;
-            border:1px solid #777777;
-            border-radius:10px;
-            width:200px;
-        }
-        .groupInfo.active{
-            display:none
-        }
-    </style>
+    <link href="css/adList.css" rel="stylesheet">
 
 </head>
 
@@ -94,6 +55,22 @@ require_once './db.inc.php';
             </div>
             <!-- 內文 -->
             <div class="wrapper wrapper-content animated fadeInRight">
+                <!-- <div class="stateAlert"> -->
+                    <div class="stateBox">
+                        <h3>狀態變更為: </h3>
+                        <div class="sty-inputGroup">
+                            <label><input type="radio" name="status" value="審核" style="margin-right:8px">審核</label>
+                            <label><input type="radio" name="status" value="上架" style="margin-right:8px">上架</label>
+                            <label><input type="radio" name="status" value="下架" style="margin-right:8px" >下架</label>
+                        </div>
+                        <input type="hidden" class="editId" name="editId" value="">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-w-m toggle" style="background:#D0D0D0">取消</button>
+                            <button class="btn btn-w-m  btn-success submit">確認</button>
+                        </div>
+                    </div>
+                <!-- </div> -->
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox ">
@@ -143,6 +120,7 @@ require_once './db.inc.php';
         let addTable = `<table class="table mb-0">
                                             <thead>
                                                 <tr>
+                                                    <th>設定狀態</th>
                                                     <th>廣告名稱</th>
                                                     <th>投放位置</th>
                                                     <th>投放對象</th>
@@ -173,25 +151,33 @@ require_once './db.inc.php';
 
                 if(data){
                     let planGroup="";
+                    
                     data = JSON.parse(data);
                     console.log(data);
                     $('.ibox-content').html("")
                     $('.ibox-content').append(addTable)
                     $('tbody').html("")
                     data.forEach(function(item){
+                        let red="";
+
                         if(item['planGroup']){
                             planGroup='再行銷族群';
                         }else{
                             planGroup='所有人';
 
                         }
+                        if(item['planStatus'] === '上架'){
+                            red='red'
+                        }
+
                         $('tbody').append(` <tr class="planRow" data-planId="${item['planId']}">
+                                                <td><button class="btn btn-sm btn-info setState">設定</button></td>
                                                 <td>${item['planName']}</td>
                                                 <td>${item['planPlace']}</td>
                                                 <td style="width:160px">${planGroup}</td>
                                                 <td>${item['planCost']}</td>
                                                 <td>${item['planClick']}</td>
-                                                <td>${item['planStatus']}</td>
+                                                <td class="planStatus ${red}">${item['planStatus']}</td>
                                                 <td>${item['planStartTime']}</td>
                                                 <td>${item['planDueTime']}</td>
                                                 <td><a class="btn btn-sm btn-primary" href="editPlan.php?editId="${item['planId']}">修改</a></td>
@@ -199,13 +185,13 @@ require_once './db.inc.php';
                                                 <td><button class="fa fa-angle-double-down btn btn-circle adInfo" data-adTarget="${item['adId']}"></button></td>
 
                                                 <tr class="coll adRow active" data-adId="${item['adId']}">
-                                                <th style="vertical-align:middle">圖片名稱:</th>
+                                                <th style="vertical-align:middle">圖片名稱 : </th>
                                                 <td style="vertical-align:middle">${item['adName']}</td>
-                                                <th style="vertical-align:middle">圖片標題:</th>
+                                                <th style="vertical-align:middle">圖片標題 : </th>
                                                 <td style="vertical-align:middle">${item['adTitle']}</td>
-                                                <th style="vertical-align:middle">圖片內文:</th>
-                                                <td colspan="1" style="vertical-align:middle;max-width:200px">${item['adContent']}</td>
-                                                <th style="vertical-align:middle">圖片連結至:</th>
+                                                <th style="vertical-align:middle">圖片內文 : </th>
+                                                <td colspan="2" style="vertical-align:middle;max-width:200px">${item['adContent']}</td>
+                                                <th style="vertical-align:middle">圖片連結至 : </th>
                                                 <td style="vertical-align:middle">${item['adLinkPlace']}</td>
                                                 <td colspan="2" style="width:350px;vertical-align:middle"><img id=imgShow src="./images/${item['adImg']}"></td>
                                                 <td style="vertical-align:middle">
@@ -218,9 +204,9 @@ require_once './db.inc.php';
 
                         // $('.groupInfo').html("")
                             if(item['planGroup']){
-                                $("tr[data-planId="+item['planId']+"]").find('td').eq(2).append(
-                                    `<span class="position-relative">
-                                    <button class="fa fa-angle-double-down btn btn-groupInfo" data-groupTarget="${item['planId']}"></button>
+                                $("tr[data-planId="+item['planId']+"]").find('td').eq(3).append(
+                                    `<span class="position-relative" style="display:inline-block">
+                                    <div class="fa fa-info infoBtn btn btn-circle" data-groupTarget="${item['planId']}"></div>
                                     <div class="groupInfo p-2 shadow-lg active" data-groupInfo="${item['planId']}"></div>
                                     </span>`);
 
@@ -246,65 +232,73 @@ require_once './db.inc.php';
             $(".adRow[data-adId="+adId+"]").toggleClass('active')
         })
 
-        $(document).on('click','.btn-groupInfo',function(){
+        $(document).on('click','.infoBtn',function(){
             let planGroupId = $(this).attr('data-groupTarget');
             $(".groupInfo[data-groupInfo="+planGroupId+"]").toggleClass('active')
             console.log(planGroupId)
         })
         
-        $('.ibox-content').on('click','.btn',function(){
 
-            if( $(this).hasClass('deletePlan') ){
+            let statusId;
+            let status;
+            let statusHtml
+            //狀態設定
+            $(document).on('click', '.setState', function(){
 
-                let deletePlanTr = $(this).parents("tr");
-                let deletePlanId = deletePlanTr.attr('data-planId');
-                // console.log(deletePlanTr,deletePlanId)
+                statusId = $(this).parents('tr').attr('data-planId');
+                status = $(this).parents('tr').children('td').eq(6);
+                statusHtml = $(this).parents('tr').children('td').eq(6).html();
+                
+                if(statusHtml == '審核'){
+                    $("input[name=status]").attr("checked",false);
+                    $("input[name=status][value='審核']").attr("checked",true);
+                }else if(statusHtml == '上架'){
+                    $("input[name=status]").attr("checked",false);
+                    $("input[name=status][value='上架']").attr("checked",true);
+                }else if(statusHtml == '下架'){
+                    $("input[name=status]").attr("checked",false);
+                    $("input[name=status][value='下架']").attr("checked",true);
+                }
+                $('.editId').attr('value',statusId);
 
-            swal({
-                    title: "確定刪除廣告活動?",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "刪除",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false
-                },
-                    function () {
-                        $.ajax({
-                            type: 'POST',
-                            url: './deletePlan1.php',
-                            data: {
-                                    deleteId:deletePlanId
-                            }
-                        })
-                        .done(function(data) {
-                            if(data){
-                                // $(document).on('click', '.confirm', function() {
-                                //     setTimeout("location.reload(true)",100);
-                                // })
-                                // deletePlanTr.remove();
-                                // // deleteAdTr.remove();
-                                // if($('.planRow').length ==0){
-                                //     $('.ibox-content').html('<h2>查無資料<h2>')
-                                // }
-                                swal("刪除成功", "", "success",);
-                                app();
+            });
 
+            
+            //狀態設定的Alert 開關
+            $(document).on('click', '.setState', function(){
+                $('.stateBox').slideToggle();
+            })
+            $(document).on('click', '.toggle', function(){
+                $('.stateBox').slideToggle();
+            })
+            
 
-
-                            }else{
-                                $(document).on('click', '.confirm', function() {
-                                    setTimeout("location.reload(true)",100);
-                                })
-                                swal("刪除失敗","","error");
-                            };
-                        })
+            //狀態修改的Ajax
+            $(document).on('click', '.submit', function() {
+                let updateStatus = $('input[name=status]:checked').val();
+                $.ajax({
+                    type: 'POST',
+                    url: './updatePlanStatus.php',
+                    data: {
+                            editId:$('input[name=editId]').val(),
+                            status:$('input[name=status]:checked').val()
+                    }
+                })
+            .done(function(data) {
+                if(data){
+                    $('.stateBox').slideToggle();
+                    if(updateStatus == '上架'){
+                        status.attr('class','planStatus red');
+                    }else{
+                        status.attr('class','planStatus');
 
                     }
-                )
-            }
+                    status.html(updateStatus);
 
+                }else{
+                    $('.stateBox').slideToggle();
+                };
+            })
         })
 
 
